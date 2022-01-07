@@ -84,7 +84,7 @@ import {Grid} from '@mui/material';
     //  }
    ]
  const Title = styled.h1 `
-   margin-top: 50px; 
+   margin-top: 20px; 
    display:flex;
    color:#3E4152;
    letter-spacing : 5px;
@@ -93,12 +93,11 @@ const Container = styled.div `
    margin-top:40px; 
    display:flex; 
    text-align:center;  
+   background-color: #f5f5ff;
    flex-direction:column; 
-   background: #ebebeb ;
    justify-content:center;
-   border-radius: 10px; 
+   
    backdrop-filter: blur(10px);
-   z-index: 0;
    padding-top: 30px ;
    margin-bottom:0px; 
    align-items:center;`
@@ -107,7 +106,6 @@ const Container = styled.div `
 const Wrapper = styled.div `
 display:flex ;
 justify-content:center;
-background:white;
 align-items:center;
 text-align:center;
 `
@@ -118,7 +116,7 @@ function HomeProducts() {
     const titleheading = title.toUpperCase() ; 
     return (
        <Container>
-            
+          
          <Wrapper>
          <Title>{titleheading}</Title>
          <Grid container  rowSpacing={1} columnSpacing={{ xs: 1, sm: 1, md: 3, lg :1  }} sx = {{display:"flex",alignItems:"center" , justifyContent:"center", width:"80%", padding: "40px"}}>

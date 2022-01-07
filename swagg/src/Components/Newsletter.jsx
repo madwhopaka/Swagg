@@ -7,6 +7,8 @@ import newsletter from '../images/newsletter.jpg' ;
 
 const Container = styled.div`
 height: 60vh; 
+padding-bottom:10vh ;
+width: 100%; 
 display: flex;    
 flex-direction: column;
 color:white;
