@@ -73,7 +73,7 @@ useEffect(() => {
           <Wrapper>
               <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3, lg :4  }}>
               {imageList.map((img)=> { return ( <Grid  item  lg = {3} md = {6} style = {{textAlign:"center", marginBottom:20}}> 
-                <Image src= {img.image} />
+                <Image key = {img.id} src= {img.image} />
               </Grid>)  })}
               </Grid>
           </Wrapper>

@@ -60,8 +60,7 @@ useEffect(() => {
       <Anouncement />
       <Nav />
       <SliderPage />
-      {dimensions.height>dimensions.width?<img  src = {mobslider} width = "100%"/>:<img src={bslider} alt="annc" width="100%" />}
-      
+      {dimensions.height>dimensions.width?<img  src = {mobslider} width = "100%"/>:<img src={bslider} alt="annc" width="100%" />}   
       <DealofDay />
           <Categories />
           <HomeProducts />
