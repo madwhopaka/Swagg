@@ -83,17 +83,17 @@ import {Grid} from '@mui/material';
     //    price : "592"
     //  }
    ]
- const Title = styled.h1 `
+ const Title = styled.h2 `
    margin-top: 20px; 
    display:flex;
    color:#3E4152;
-   letter-spacing : 5px;
    `
 const Container = styled.div `
    display:flex; 
-   text-align:center;  
+   text-align:left;  
    flex-direction:column; 
    justify-content:center;
+   padding: 100px ;
    backdrop-filter: blur(10px);
    background-color: whitesmoke; 
    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
@@ -106,17 +106,16 @@ const Wrapper = styled.div `
 display:flex ;
 justify-content:center;
 align-items:center;  
-text-align:center;
+text-align:left;
 `
 
 
-function HomeProducts() {
-    const title = "Trending Fashion" ; 
+function Products() {
+    const title = "Dresses" ; 
     const titleheading = title.toUpperCase() ; 
     return (
        <Container>
          <Wrapper>
-         <Title>{titleheading}</Title>
          <Grid container  rowSpacing={1} columnSpacing={{ xs: 1, sm: 1, md: 3, lg :1  }} sx = {{display:"flex",alignItems:"center" , justifyContent:"center", width:"80%", padding: "40px"}}>
         {homeProducts.map((product)=> {
             return (<Product item = {product}  key = {product.id} />) ; 
@@ -127,4 +126,4 @@ function HomeProducts() {
     )
 }
 
-export default HomeProducts
+export default Products

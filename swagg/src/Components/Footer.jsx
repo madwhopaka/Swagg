@@ -9,9 +9,8 @@ import PhoneIcon from '@mui/icons-material/Phone';
 import EmailIcon from '@mui/icons-material/Email';
 import payop from '../images/payop.png' ;
 const Container = styled.div`
-  padding-top: 20px;    
+  padding: 50px;    
   display: flex;
-  padding-left:20px ;
   color: #363535; 
   /* background-color: #7f53ac;
 background-image: linear-gradient(315deg, #7f53ac 0%, #647dee 74%); */
@@ -32,6 +31,7 @@ const SocialContainer = styled.div`
 display:flex;`; 
 
 const SocialIcon = styled.div`
+margin-top: 35px ;
 height: 40px ;
 width: 40px;
 border-radius:50%; 
@@ -81,6 +81,7 @@ display: flex;
 align-items:center; `
 
 const Payment =  styled.img`
+margin-top:28px ;
 height: 50px; 
 width : 300px ;
 

@@ -3,15 +3,22 @@ import dod1 from '../images/dod1.jpg' ;
 import dod2 from '../images/dod2.jpg' ;
 import dod3 from '../images/dod3.jpg' ;
 import dod4 from '../images/dod4.jpg' ;
+import React, {useState,useEffect} from 'react' ; 
 import {Grid} from '@mui/material' ; 
+import Dealofday from '../MobileComp/Dealofday';
+import { mobile } from '../responsive';
+import {imageList} from '../utils/imageList.js';
 
 const Container = styled.div `
 margin-top:40px; 
 display:flex; 
+${mobile({width:"100vw"})};
 flex-direction:column; 
 justify-content:center;
 background-color: whitesmoke;
-padding: 10px ;
+padding-top:20px ;
+padding-bottom:50px ;
+box-shadow: 5px 5px 15px rgba(white, .5);
 align-items:center;
 text-align:center; 
 `
@@ -19,49 +26,45 @@ text-align:center;
 const Title = styled.h1 `
 display:flex;
 color:#3E4152;
+${mobile({letterSpacing:"0px", fontSize: "20px"})};
 letter-spacing : 5px;
 margin-bottom: 20px; 
 `
 
 const Wrapper = styled.div `
 display:flex ;
+${mobile({flexDirection:"column"})};
 justify-content:center;
 align-items:center;
 text-align:center;
 `
+
+
 const ImgContainer = styled.div `
 margin-right:10px; 
 `
 const Image = styled.img`
 height:360px;
-width:100%; 
+${mobile({width: "100%", padding: "2px"})};
 `
 
 function DealofDay() {
-    const imageList = [
-        {
-            id: 1 , 
-            image :  dod1, 
+   
 
-        }, 
-        {
-            id: 2 , 
-            image :  dod2, 
+     const width  = window.innerWidth ;
+    const height = window.innerHeight;
+    const [screenHeight, setHeight] = useState(height) ; 
+    const [screenWidth, setWidth] = useState(width) ;   
 
-        },
-        {
-            id: 3, 
-            image :  dod3, 
+    useEffect(() => {
+        setWidth(window.innerWidth) ; 
+        setHeight(window.innerHeight) ; 
+    }, [window.innerHeight, window.innerWidth]);
 
-        },
-        {
-            id:4 , 
-            image: dod4 , 
-        }
-     ]
     
     return (
-        <Container>
+        <React.Fragment>
+            {screenHeight>screenWidth?<Dealofday/>:  <Container>
           <Title>DEALS OF THE DAY</Title>
           <Wrapper>
               <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3, lg :4  }}>
@@ -70,7 +73,9 @@ function DealofDay() {
               </Grid>)  })}
               </Grid>
           </Wrapper>
-        </Container>
+        </Container>}
+          
+        </React.Fragment>
     )
 }
 

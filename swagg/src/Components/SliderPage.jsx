@@ -1,6 +1,5 @@
 
 import styled from 'styled-components';
-import {useState} from 'react' ; 
 import ArrowBackOutlinedIcon from '@mui/icons-material/ArrowBackOutlined';
 import ArrowForwardOutlinedIcon from '@mui/icons-material/ArrowForwardOutlined';
 import Silider from './Silider';
@@ -8,12 +7,13 @@ import Silider from './Silider';
 
 
 const Container = styled.div`
-justify-content: center;
-align-items:center;
+
 `
+
 
 function SliderPage() {
   
+   
     return (
      <Container >
        <Silider />

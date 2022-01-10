@@ -1,5 +1,6 @@
 import styled from 'styled-components' ; 
 import Grid from '@mui/material/Grid' ; 
+import {useState,useEffect} from 'react' ; 
 import cat1 from '../images/cat1.jpg' ; 
 import cat2 from '../images/cat2.jpg' ; 
 import cat3 from '../images/cat3.jpg' ; 
@@ -8,7 +9,8 @@ import cat5 from '../images/cat5.jpg' ;
 import cat6 from '../images/cat6.jpg' ; 
 import cat7 from '../images/cat7.jpg' ;
 import cat8 from '../images/cat8.jpg' ; 
-
+import bgimg from '../images/bgimg.png';
+import { mobile } from '../responsive';
 // import  categories from '../data.js/categories'
 
 const categories = [
@@ -55,19 +57,22 @@ const categories = [
 
 const Title = styled.h1 `
 display:flex;
-color:#3E4152;
+/* color:#3E4152; */
 letter-spacing : 5px;
 margin-bottom: 20px; 
 `
 const Container = styled.div `
-margin-top:40px; 
 display:flex; 
+background: url(${bgimg});
+background-position:100%;
+color: white ;
 text-align:center; 
 flex-direction:column; 
 justify-content:center;
-padding: 10px ;
-align-items:center;
+padding: 50px 200px ; 
+${mobile({padding:"20px", color: "black"})}
 
+align-items:center;
 `
 const Wrapper = styled.div `
 display:flex ;
@@ -80,14 +85,21 @@ flex:1 ;
 margin-left:50px;
 text-align:center;
 `
+
+
 const Image = styled.img`
-width: 85%;     
+width: 85%;  
+${mobile({width: "20%"})}   
 `
 
 const Name = styled.h3`
-color: gray ;
+/* color: gray ; */
+${mobile({fontSize:"12px"})}   
+
 `
 function Categories() {
+    
+
     return (
        <Container>
              <Title>TOP CATEGORIES</Title>
@@ -97,10 +109,9 @@ function Categories() {
             {categories.map((cat)=> {
                 return (
                   
-                    <Grid  item  lg = {3} md = {4} style = {{textAlign:"center", marginBottom:20}}> 
-                    
+                    <Grid  item  sm = {3} lg = {3} md = {4} style = {{textAlign:"center", marginBottom:20}}>  
                      <Image src = {cat.image} />
-                     <Name>{cat.name}</Name>
+                     <Name>{cat.name.toUpperCase()}</Name>
                     </Grid >
                     
                   
