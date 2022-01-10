@@ -10,7 +10,6 @@ import { mobile } from '../responsive';
 import {imageList} from '../utils/imageList.js';
 
 const Container = styled.div `
-margin-top:40px; 
 display:flex; 
 ${mobile({width:"100vw"})};
 flex-direction:column; 
@@ -51,20 +50,25 @@ ${mobile({width: "100%", padding: "2px"})};
 function DealofDay() {
    
 
-     const width  = window.innerWidth ;
-    const height = window.innerHeight;
-    const [screenHeight, setHeight] = useState(height) ; 
-    const [screenWidth, setWidth] = useState(width) ;   
+  const [dimensions, setDimensions] = React.useState({ 
+    height: window.innerHeight,
+    width: window.innerWidth
+  })
 
-    useEffect(() => {
-        setWidth(window.innerWidth) ; 
-        setHeight(window.innerHeight) ; 
-    }, [window.innerHeight, window.innerWidth]);
+useEffect(() => {
+    function handleResize() {
+        setDimensions({
+          height: window.innerHeight,
+          width: window.innerWidth
+        });
+    }
 
+    window.addEventListener('resize', handleResize);
+});
     
     return (
         <React.Fragment>
-            {screenHeight>screenWidth?<Dealofday/>:  <Container>
+            {dimensions.height>dimensions.width?<Dealofday/>:  <Container>
           <Title>DEALS OF THE DAY</Title>
           <Wrapper>
               <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3, lg :4  }}>

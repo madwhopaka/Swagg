@@ -40,20 +40,27 @@ const Curve = styled.div`
 
 function Home() {
   const width  = window.innerWidth ;
-    const height = window.innerHeight;
-    const [screenHeight, setHeight] = useState(height) ; 
-    const [screenWidth, setWidth] = useState(width) ;   
+  const [dimensions, setDimensions] = React.useState({ 
+    height: window.innerHeight,
+    width: window.innerWidth
+  })
 
-    useEffect(() => {
-        setWidth(window.innerWidth) ; 
-        setHeight(window.innerHeight) ; 
-    }, [window.innerHeight, window.innerWidth]);
+useEffect(() => {
+    function handleResize() {
+        setDimensions({
+          height: window.innerHeight,
+          width: window.innerWidth
+        });
+    }
+
+    window.addEventListener('resize', handleResize);
+});
   return (
     <Container>
       <Anouncement />
       <Nav />
       <SliderPage />
-      {screenHeight>screenWidth?<img  src = {mobslider} width = "100%"/>:<img src={bslider} alt="annc" width="100%" />}
+      {dimensions.height>dimensions.width?<img  src = {mobslider} width = "100%"/>:<img src={bslider} alt="annc" width="100%" />}
       
       <DealofDay />
           <Categories />

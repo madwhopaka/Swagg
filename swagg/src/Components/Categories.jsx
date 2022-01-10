@@ -1,6 +1,6 @@
 import styled from 'styled-components' ; 
 import Grid from '@mui/material/Grid' ; 
-import {useState,useEffect} from 'react' ; 
+import React, {useState,useEffect} from 'react' ; 
 import cat1 from '../images/cat1.jpg' ; 
 import cat2 from '../images/cat2.jpg' ; 
 import cat3 from '../images/cat3.jpg' ; 
@@ -11,6 +11,7 @@ import cat7 from '../images/cat7.jpg' ;
 import cat8 from '../images/cat8.jpg' ; 
 import bgimg from '../images/bgimg.png';
 import { mobile } from '../responsive';
+import Categoryies from '../MobileComp/Categoryies';
 // import  categories from '../data.js/categories'
 
 const categories = [
@@ -98,10 +99,40 @@ ${mobile({fontSize:"12px"})}
 
 `
 function Categories() {
-    
+    const [dimensions, setDimensions] = React.useState({ 
+        height: window.innerHeight,
+        width: window.innerWidth
+      })
+
+    useEffect(() => {
+        function handleResize() {
+            setDimensions({
+              height: window.innerHeight,
+              width: window.innerWidth
+            });
+        }
+
+        window.addEventListener('resize', handleResize);
+    });
+
+
 
     return (
-       <Container>
+       <React.Fragment>
+            {dimensions.height>dimensions.width?<Categoryies />:<CategoryComp />}
+       </React.Fragment>
+    )
+}
+
+export default Categories
+
+
+
+
+
+function CategoryComp() {
+    return (
+        <Container>
              <Title>TOP CATEGORIES</Title>
         <Wrapper>
             <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3, lg :1 }}>
@@ -124,4 +155,4 @@ function Categories() {
     )
 }
 
-export default Categories
+

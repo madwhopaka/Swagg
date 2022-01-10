@@ -9,7 +9,7 @@ import slidermob1 from '../images/slidermob1.jpg';
 import slidermob3 from '../images/slidermob3.jpg';
 import slidermob4 from '../images/slidermob4.jpg';
 import styled from 'styled-components';
-import {useState,useEffect} from 'react' ; 
+import React, {useState,useEffect} from 'react' ; 
 
 const Image = styled.img`
 width: 100%; 
@@ -22,15 +22,21 @@ justify-content: center;
 
 ` ;
 function Silider() {
-  const width  = window.innerWidth ;
-    const height = window.innerHeight;
-    const [screenHeight, setHeight] = useState(height) ; 
-    const [screenWidth, setWidth] = useState(width) ;   
+  const [dimensions, setDimensions] = React.useState({ 
+    height: window.innerHeight,
+    width: window.innerWidth
+  })
 
-    useEffect(() => {
-        setWidth(window.innerWidth) ; 
-        setHeight(window.innerHeight) ; 
-    }, [window.innerHeight, window.innerWidth]);
+useEffect(() => {
+    function handleResize() {
+        setDimensions({
+          height: window.innerHeight,
+          width: window.innerWidth
+        });
+    }
+
+    window.addEventListener('resize', handleResize);
+});
 
     return (
         <Container>
@@ -46,10 +52,10 @@ function Silider() {
   ]}   
   animationSpeed={1000}
 >
-  <Image  src={screenHeight>screenWidth?slidermob1:slider1} alt = 'slider1'/>
-  <Image src={screenHeight>screenWidth?slidermob2:slider2}  alt = 'slider1'/>
-  <Image src={screenHeight>screenWidth?slidermob3:slider3}  alt = 'slider1'/>
-  <Image src={screenHeight>screenWidth?slidermob4:slider4}  alt = 'slider1'/>
+  <Image  src={dimensions.height>dimensions.width?slidermob1:slider1} alt = 'slider1'/>
+  <Image src={dimensions.height>dimensions.width?slidermob2:slider2}  alt = 'slider1'/>
+  <Image src={dimensions.height>dimensions.width?slidermob3:slider3}  alt = 'slider1'/>
+  <Image src={dimensions.height>dimensions.width?slidermob4:slider4}  alt = 'slider1'/>
 </Carousel>
         </Container>
     )
