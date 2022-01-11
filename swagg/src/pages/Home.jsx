@@ -65,7 +65,7 @@ useEffect(() => {
           <Categories />
           <HomeProducts />
       <Newsletter />
-      {/* <Footer /> */}
+      <Footer />
     </Container>
   );
 }
