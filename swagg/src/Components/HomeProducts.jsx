@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState,useEffect} from 'react'
 import styled from 'styled-components' ; 
 import pro1 from '../images/pro1.jpg' ; 
 import pro2 from '../images/pro2.jpg' ; 
@@ -11,78 +11,9 @@ import pro8 from '../images/pro8.jpg' ;
 import pro9 from '../images/pro9.jpg' ; 
 import Product from './Product';
 import {Grid} from '@mui/material';
+import { homeProducts } from '../utils/homeProducts';
+import TrendingList from '../MobileComp/TrendingList';
 
- const homeProducts = [
-    { 
-        id: 1 , 
-        image : pro1, 
-        brand: "Campus Sutra", 
-        name: "Textured Jacket with Pockets", 
-        price : "1,399" , 
-        cutprice: "1799"
-
-    },
-    { 
-       id: 2 , 
-       image : pro2, 
-       brand: "Dennislingo", 
-       name: "Full Sleeves Slim Fit Shirt",
-       price : "592" ,
-       cutprice: "650"
-   },
-   { 
-       id: 3 , 
-       image : pro3, 
-       brand: "Dennislingo", 
-       name: "Colourblock Crew- Neck T-shirt",
-       price : "587", 
-       cutprice: "789", 
-   },
-   { 
-       id: 4, 
-       image : pro4, 
-       brand: " Queen Be", 
-       name: "Kundan Perals Necklace Set",
-       price : "3,920",
-       cutprice: "4999", 
-   },{ 
-       id: 5, 
-       image : pro5, 
-       brand: "UNITED COLORS", 
-       name: "Full Sleeves White Shirt",
-       price : "752",
-       cutprice: "999",
-   },
-   { 
-       id: 6 , 
-       image: pro6,
-       brand: "BITTERLIME", 
-       name: "Block Print Kurta Set",
-       price : "1,100",
-       cutprice : "1,599"
-   },
-   { 
-       id: 7, 
-       image : pro7, 
-       brand: "CAMPUS SUTRA", 
-       name: "Colourblock Crew-Neck T-shirt",
-       price : "592",
-       cutprice : "949"
-   },{ 
-       id: 8 , 
-       image : pro8, 
-       brand: "MIMOSA", 
-       name: "Kanjivaram Art Silk Saree",
-       price : "2,400",
-       cutprice: "3199"
-   },
-    //  { id: 9, 
-    //   image: pro9, 
-    //   brand: "Dennislingo", 
-    //    name: "Full Sleeves Slim Fit Shirt",
-    //    price : "592"
-    //  }
-   ]
  const Title = styled.h1 `
    margin-top: 20px; 
    display:flex;
@@ -111,20 +42,49 @@ text-align:center;
 
 
 function HomeProducts() {
-    const title = "Trending Fashion" ; 
-    const titleheading = title.toUpperCase() ; 
+    const [dimensions, setDimensions] = React.useState({ 
+        height: window.innerHeight,
+        width: window.innerWidth
+      })
+
+    useEffect(() => {
+        function handleResize() {
+            setDimensions({
+              height: window.innerHeight,
+              width: window.innerWidth
+            });
+        }
+
+        window.addEventListener('resize', handleResize);
+    });
+    
     return (
-       <Container>
-         <Wrapper>
-         <Title>{titleheading}</Title>
-         <Grid container  rowSpacing={1} columnSpacing={{ xs: 1, sm: 1, md: 3, lg :1  }} sx = {{display:"flex",alignItems:"center" , justifyContent:"center", width:"80%", padding: "40px"}}>
-        {homeProducts.map((product)=> {
-            return (<Product item = {product}  key = {product.id} />) ; 
-        })}
-        </Grid>
-        </Wrapper>
-       </Container>
+        <React.Fragment>
+      {dimensions.height>dimensions.width? <TrendingList />: <HomeProductsComp />}
+      </React.Fragment>
     )
 }
 
 export default HomeProducts
+
+
+
+
+function HomeProductsComp() {
+    const title = "Trending Fashion" ; 
+    const titleheading = title.toUpperCase() ; 
+    return (
+        <Container>
+        <Wrapper>
+        <Title>{titleheading}</Title>
+        <Grid container  rowSpacing={1} columnSpacing={{ xs: 1, sm: 1, md: 3, lg :1  }} sx = {{display:"flex",alignItems:"center" , justifyContent:"center", width:"80%", padding: "40px"}}>
+       {homeProducts.map((product)=> {
+           return (<Product item = {product}  key = {product.id} />) ; 
+       })}
+       </Grid>
+       </Wrapper>
+      </Container>
+    )
+}
+
+

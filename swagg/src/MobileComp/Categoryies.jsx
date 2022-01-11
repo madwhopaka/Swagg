@@ -26,7 +26,8 @@ text-align:center;
 
 
 const Image = styled.img`
-width: 35vw;   
+width: 35vw;  
+
 border-radius  :50% ;
 `
 
@@ -47,12 +48,10 @@ function Categoryies() {
              {categories.map((cat)=> {
                  return (
                    
-                     <Grid  item  sm = {6} lg = {3} md = {4} style = {{textAlign:"center", marginBottom:20}}>  
+                     <Grid  item  sm = {6} lg = {3} md = {4} style = {{textAlign:"center", margin:"10px"}}>  
                       <Image src = {cat.image} />
                       <Name>{cat.name.toUpperCase()}</Name>
-                     </Grid >
-                     
-                   
+                     </Grid >      
                  )
              })}
                
