@@ -1,15 +1,19 @@
 import styled from 'styled-components' ; 
 import registerbg from '../images/registerbbg.jpg'
 import icon from '../images/logoicon.png' ; 
+import {mobile} from '../responsive.js' ; 
+import {Link} from 'react-router-dom' ; 
+import bgmob from '../images/bgmob.jpg';
+
 
 const Container = styled.div `
-width: 100%; 
+width: 100vw; 
 position: relative; 
 background-color: white ;
 background: url(${registerbg}) ; 
+${mobile({background: `url(${bgmob})`, backgroundSize:"cover"})}
 background-size: cover;
 display:flex; 
-
 flex-direction: column; 
 justify-content: center;
 align-items: center;
@@ -17,6 +21,7 @@ height: 100vh;`  ;
 
 const Logo = styled.h1 `
     font-size: 30px;
+    ${mobile({fontSize:"30px", position:"relative", margin: "0px 10px 40px 10px", alignItems:"flex-end",justifyContent:"end"})}
     position: absolute;
     top:0 ; 
     left: 0 ; 
@@ -26,7 +31,6 @@ const Logo = styled.h1 `
     align-items: center;
     font-style: italic;
     color: black;
-    
 `
 const Icon = styled.img`
 height: 40px;
@@ -38,6 +42,7 @@ const WrapperContainer = styled.form `
 background-color: #ffffff;
 display:flex; 
 padding: 60px 5px 30px 5px ;
+${mobile({width:"80vw", marginTop:"-50px",borderRadius:"20px"})}
 flex-direction: column; 
 justify-content: center;
 align-items: center;
@@ -50,13 +55,15 @@ const Title  = styled.h2`
 `
 
 const InputWrapper = styled.div `
-justify-content: start;
+justify-content: center;
+${mobile({width:"70vw",margin:"10px"})}
 align-items:center;` 
 
 const InputContainer = styled.div `
     display:flex ;
     width: 100% ;
-    justify-content: start ; 
+    ${mobile({width:"100%", alignItems:"center"})}
+    justify-content: center ; 
     margin-bottom: 10px; 
 `
 const Label = styled.div `
@@ -67,6 +74,7 @@ width: 100% ;
 ` 
 const Input= styled.input `
 padding: 10px ;
+${mobile({width:"60%", margin:"5px"})}
 margin:10px ;
 font-size: 15px;
 border: 2px solid grey ;
@@ -79,6 +87,7 @@ const Image = styled.img `
 const Agreement = styled.div `
  padding: 10px ;
  width: 90%; 
+ ${mobile({width:"60%"})}
  text-align: center;
 ` ; 
 
@@ -97,9 +106,17 @@ background-color: #5771bc;
 padding: 10px 25px ;
 border: none  ;
 &:hover {
-    background-color: teal;
+    background-color: #1b385e;
 }
 ` ; 
+
+
+const AlreadyHave = styled.div`
+    
+`
+const AlreadyHaveText = styled.p `
+    
+`
 
 function Register() {
     return (
@@ -133,6 +150,7 @@ function Register() {
              <Button>
                  REGISTER
              </Button>
+             <AlreadyHave> <AlreadyHaveText>Already have an account ?  <Link style= {{color: " #1b385e"}} replace to ="/login" >Login</Link></AlreadyHaveText></AlreadyHave>
          </WrapperContainer>
        </Container>
     )

@@ -1,13 +1,14 @@
 import styled from 'styled-components' ; 
 import dod1 from '../images/dod1.jpg' ; 
 import dod2 from '../images/dod2.jpg' ;
+import { Link } from 'react-router-dom';
 import dod3 from '../images/dod3.jpg' ;
 import dod4 from '../images/dod4.jpg' ;
 import { imageList } from '../utils/imageList';
 import Carousel, {autoplayPlugin} from '@brainhubeu/react-carousel';
 
 const Container = styled.div `
-margin-top:40px; 
+margin-top:10px; 
 display:flex; 
 width:100vw; 
 flex-direction:column; 
@@ -52,7 +53,9 @@ function Dealofday() {
   animationSpeed={1000}
 >
 {imageList.map((img)=> { return (
+                <Link to= '/products/${'>
                 <Image src= {img.image} />
+                </Link>
              )  })}
 </Carousel>
               

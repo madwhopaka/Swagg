@@ -1,5 +1,6 @@
 import styled from 'styled-components'  ;
 import  {categories} from '../utils/categories'
+import {Link} from 'react-router-dom'  ; 
 import { Grid } from '@mui/material';
 
 
@@ -46,12 +47,14 @@ function Categoryies() {
           <Grid container rowSpacing={1} style = {{display:"flex", alignItems:"center", justifyContent:"center"}} columnSpacing={{ xs: 1, sm: 2, md: 3, lg :1 }}>
              
              {categories.map((cat)=> {
+                 const url = `/products/${cat.cat[0]}`
                  return (
-                   
+                    <Link to = {url}>
                      <Grid  item  sm = {6} lg = {3} md = {4} style = {{textAlign:"center", margin:"10px"}}>  
                       <Image src = {cat.image} />
                       <Name>{cat.name.toUpperCase()}</Name>
-                     </Grid >      
+                     </Grid >  
+                     </Link>    
                  )
              })}
                

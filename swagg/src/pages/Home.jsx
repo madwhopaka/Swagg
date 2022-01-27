@@ -10,6 +10,7 @@ import Newsletter from "../Components/Newsletter";
 import bslider from "../images/bslider.png";
 import mobslider from '../images/final-band-mobile.png' ; 
 import adidas from "../images/adidas.jpg";
+import { mobile } from "../responsive";
 import Footer from "../Components/Footer";
 
 const Image = styled.img`
@@ -38,6 +39,9 @@ const Curve = styled.div`
   z-index: 1;
 `;
 
+const Banner = styled.div `
+  ${mobile({padding: "10px 0px"})}
+`
 function Home() {
   const width  = window.innerWidth ;
   const [dimensions, setDimensions] = React.useState({ 
@@ -60,7 +64,9 @@ useEffect(() => {
       <Anouncement />
       <Nav />
       <SliderPage />
-      {dimensions.height>dimensions.width?<img  src = {mobslider} width = "100%"/>:<img src={bslider} alt="annc" width="100%" />}   
+      <Banner>
+      {dimensions.height>dimensions.width?<img  src = {mobslider} width = "100%"/>:<img src={bslider} alt="annc" width="100%" />} 
+      </Banner>  
       <DealofDay />
           <Categories />
           <HomeProducts />

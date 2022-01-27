@@ -109,11 +109,14 @@ transition: 0.3s ease-in;
 
 
 function Product(props) {
+    // console.log(`${process.env.PUBLIC_URL}/MobileComp/`) ;
+
     return (
      
      
        <ImgContainer > 
-       <Image src = {props.item.image} />
+      
+       <Image src= {props.item.image} />
        <IconContainer>
            <SearchIcon style = {{margin:10}} />
            <LocalMallOutlinedIcon style = {{margin:10}} />
@@ -121,7 +124,7 @@ function Product(props) {
        </IconContainer>
        <p style = {{fontWeight:800, fontSize: "12px"}}>{props.item.brand.toUpperCase()}</p>
        <Name>
-           {props.item.name}
+           {props.item.title}
        </Name>
        <PriceContainer>
        <Price>Rs. {props.item.price}</Price>

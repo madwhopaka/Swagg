@@ -7,7 +7,7 @@ import { Grid } from '@mui/material';
 
 const Container = styled.div `
 margin-top: 30px;
-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);` ; 
+` ; 
 
 const Title  = styled.h3 `
 font-size: 25px;

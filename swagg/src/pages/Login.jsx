@@ -1,6 +1,9 @@
 import styled from 'styled-components' ; 
 import registerbg from '../images/registerbbg.jpg'
+import { Link } from 'react-router-dom';
 import icon from '../images/logoicon.png' ; 
+import {mobile} from '../responsive.js' ; 
+import bgmob from '../images/bgmob.jpg'
 
 const Container = styled.div `
 width: 100%; 
@@ -8,7 +11,7 @@ position: relative;
 background-color: white ;
 background: url(${registerbg}) ; 
 background-size: cover;
-
+${mobile({background: `url(${bgmob})`, backgroundSize:"cover"})}
 display:flex; 
 flex-direction: column; 
 justify-content: center;
@@ -18,6 +21,7 @@ height: 100vh;`  ;
 const Logo = styled.h1 `
     font-size: 30px;
     position: absolute;
+    ${mobile({fontSize:"30px", position:"relative", margin: "0px 10px 40px 10px", alignItems:"flex-end",justifyContent:"end"})}
     top:0 ; 
     left: 0 ; 
     margin: 30px;
@@ -38,6 +42,7 @@ const WrapperContainer = styled.form `
 background-color: #ffffff;
 width: 350px ;
 /* border-radius: 10px; */
+${mobile({width:"70vw", borderRadius:"20px"})}
 box-shadow: 6px 6px 26px -6px rgba(0, 0, 0, 0.75);
 display:flex; 
 padding: 70px 25px 50px 25px ;
@@ -53,12 +58,14 @@ const Title  = styled.h2`
 
 const InputWrapper = styled.div `
 justify-content: start;
+${mobile({width:"65vw",margin:"10px"})}
 width: 100%; 
 align-items:center;` 
 
 const InputContainer = styled.div `
     display:flex ;
     width: 100% ;
+    ${mobile({width:"100%", alignItems:"center"})}
     justify-content: start ; 
     margin-bottom: 10px; 
 `
@@ -71,6 +78,7 @@ width: 100% ;
 const Input= styled.input `
 padding: 10px ;
 margin:10px ;
+${mobile({width:"50%", margin:"5px"})}
 width: 100%; 
 font-size: 15px;
 border: 2px solid grey ;
@@ -138,7 +146,7 @@ function Register() {
              <Button>
                  LOGIN
              </Button>
-             <AlreadyHave> <AlreadyHaveText>Already have an account ?  <a style= {{color: " #1b385e"}}href='#'>Login</a></AlreadyHaveText></AlreadyHave>
+             <AlreadyHave> <AlreadyHaveText>Don't have an account ?  <Link style= {{color: " #1b385e"}} to='/register'>Signup</Link></AlreadyHaveText></AlreadyHave>
          </WrapperContainer>
        </Container>
     )

@@ -7,53 +7,75 @@ import Footer from '../Components/Footer'
 import prode1 from '../images/prode1.jpg';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
+import { mobile } from '../responsive'
 
 
 const Container = styled.div `
+align-items: center;
+justify-content: center;
 box-shadow: 0px 5px 5px 0px rgba(0,0,0,0.3);
+
 `
 const ImgContainer = styled.div `
-flex:1 ;`
+flex:1 ;
+display: flex;
+justify-content: center;
+${mobile({display:"flex", flexDirection:"column", padding:"10px", alignItems:"center"})}
+`
+
 const Wrapper = styled.div`
-padding:50px ; 
-display:flex; ` 
+padding: 50px;
+${mobile({boxShadow:"0px 5px 5px 0px rgba(0,0,0,0.3)"})}
+display:flex;
+${mobile({flexDirection:"column", padding:"20px", alignItems:"center", justifyContent:"center"})}
+ ` 
 
 
 const InfoContainer = styled.div `
 margin : 10px ;
 flex:1;
-padding: 0px 50px ;`
+display:flex; 
+flex-direction : column; 
+padding: 20px;
+justify-content: center; 
+${mobile({flexDirection:"column", padding:"10px",  alignItems:"center", justifyContent:"center"})}
+;`
 
 const Image = styled.img`
-width: 90%;
+width: 70%;
 object-fit: cover;
  `
 
-
 const Title = styled.h1`
-font-weight: 400;` 
+font-weight: 400;
+${mobile({fontSize:"25px", textAlign:"center"})}
+` 
 const Desc = styled.p `
 margin:20px 0px;
+${mobile({ textAlign:"center"})}
 color: #929191; 
 ` 
 const Brand = styled.h3 `
 margin:10px 0px ;
 color: #2C4152; 
 font-weight: 500;
+${mobile({fontSize:"20px", textAlign:"center"})}
 font-size:25px;`
 
 
 const Price = styled.h3 `
 font-weight: 200;
 font-size: 40px ;
+${mobile({fontSize:"30px", textAlign:"center", margin:"0px 10px 10px 0px"})}
 margin-right: 10px;
 `
 
 const PriceContainer = styled.div `
 width: 50%; 
+${mobile({ textAlign:"center", width: "100%", display:"flex",justifyContent:"center", alignItems:"center"})}
 display: flex;
 align-items: center;
-justify-content: start  ;`
+justify-content: start ;`
 
 
 // const Cut = styled.strike `
@@ -65,17 +87,20 @@ justify-content: start  ;`
 const FilterContainer = styled.div`
 display: flex;
 justify-content: space-between;
+${mobile({width: "100%", flexDirection:"column", textAlign:"center", justifyContent:"center", alignItems:"center"})}
 width: 50%; 
 margin : 30px 0px; ` ; 
 
 const Filter = styled.div`
 display:flex ;
 align-items: center;
+${mobile({justifyContent:"space-between", alignItems:"center"})}
 justify-content:space-between;` ; 
 
 const FilterColor = styled.div`
 height:30px; 
 width: 30px; 
+${mobile({height:"25px", width:"25px"})}
 border-radius: 50%; 
 background: ${props=>props.color};
 margin:  0px 5px ;
@@ -85,7 +110,11 @@ border: 2px linen black ;
 const FilterSize = styled.select`
 margin-left: 10px;
 padding: 5px ;` ; 
-const FilterSizeOption = styled.option`` ; 
+
+
+const FilterSizeOption = styled.option`
+${mobile({padding:"20px"})}` ; 
+
 const FilterTitle = styled.span`
 font-weight: 200;
 margin:10px 0px ;
@@ -97,6 +126,7 @@ const AddContainer = styled.div `
 width: 50%; 
 display: flex;
 align-items: center;
+${mobile({ textAlign:"center", width:"100%", justifyContent:"center", margin:"0px"})}
 justify-content: space-between;
 
 ` ; 
@@ -106,6 +136,8 @@ const AmountContainer = styled.div `
 display:flex; 
 justify-content: space-between;
 margin-left: 40px;
+${mobile({marginLeft:"-15px", marginRight:"10px"})}
+
 align-items:center; 
 font-weight: 700;
 ` ; 
@@ -121,21 +153,35 @@ height: 30px;
 width: 30px ; 
 border-radius: 10px ;
 ` ; 
+
 const Button = styled.button `
 outline:none ; 
 padding : 10px; 
 background:white; 
+${mobile({ textAlign:"center", borderRadius:"20px", border:"none", background:"#2C4152", color:"white", transition: "0.3s ease-in"})}
 border : 3px solid #2C4152 ; 
 font-weight: 600;
 
 &:hover {
     background: whitesmoke ;
+    ${mobile({background:"slateblue", transform:"scale(1.05)"})}
 }
-` ; 
+&::before {
+    ${mobile({ textAlign:"center", borderRadius:"20px", border:"none", background:"#2C4152", color:"white"})}
+}
+&::after{
+    ${mobile({background:"slateblue", transform:"scale(1.05)"})}
+}
+
+`
 
 
 
 
+
+
+const P = styled.p `
+${mobile({color:"lightgray", textAlign:"center  "})}`
 
 function ProductDetail() {
     return (
@@ -153,7 +199,7 @@ function ProductDetail() {
                   </Title>
                   <Desc>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corrupti tempora culpa adipisci distinctio voluptates, quo possimus enim veniam dolor similique officia quae nobis, beatae, aperiam cum ex labore quis eligendi.</Desc>
                   <PriceContainer><Price>Rs. 1,000</Price> <strike style = {{color:"grey", fontWeight: "100",fontSize: "20px;"}}>1,699</strike></PriceContainer>
-                  <p style = {{color:"grey"}}>Price inclusive of all taxes</p>
+                  <P style = {{color:"grey"}}>Price inclusive of all taxes</P >
                   
                   <FilterContainer>
                       <Filter>

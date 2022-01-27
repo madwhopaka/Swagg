@@ -1,6 +1,7 @@
 import styled from 'styled-components' ; 
 import Grid from '@mui/material/Grid' ; 
 import React, {useState,useEffect} from 'react' ; 
+import {Link} from 'react-router-dom' ; 
 import cat1 from '../images/cat1.jpg' ; 
 import cat2 from '../images/cat2.jpg' ; 
 import cat3 from '../images/cat3.jpg' ; 
@@ -92,12 +93,15 @@ function CategoryComp() {
             <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3, lg :1 }}>
              
             {categories.map((cat)=> {
+                const url = `/products/${cat.cat[0]}`;
                 return (
-                  
-                    <Grid  item  sm = {3} lg = {3} md = {4} style = {{textAlign:"center", marginBottom:20}}>  
+                    <Grid  item  sm = {3} lg = {3} md = {4} style = {{textAlign:"center", marginBottom:20}}> 
+                         <Link to = {url} style= {{textDecoration:"none", color:"white"}} >
                      <Image src = {cat.image} />
                      <Name>{cat.name.toUpperCase()}</Name>
+                     </Link>
                     </Grid >
+                    
                     
                   
                 )

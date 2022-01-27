@@ -21,7 +21,7 @@ background-image: linear-gradient(315deg, #7f53ac 0%, #647dee 74%); */
 `;
 const Left = styled.div`
   flex: 1;
-  ${mobile({padding:"10px 30px"})}
+  ${mobile({padding:"10px 30px", height:"20vh"})}
  
 
 `;
@@ -31,7 +31,7 @@ ${mobile({padding:"5px", textAlign:"center"})}
 ` ;
 const Desc = styled.div`
 margin: 20px 0px;
-${mobile({margin: "5px", padding:"5px"})}
+${mobile({margin: "5px", padding:"5px", textAlign:"center"})}
 font-size: 15px ;
 ` 
 
@@ -116,8 +116,7 @@ function Footer() {
           Swagg is the
           ultimate destination for fashion and lifestyle, being host to a wide
           array of merchandise including clothing, footwear, accessories,
-          jewellery, personal care products and more. It is time to redefine
-          your style statement with our treasure-trove of trendy items. Our
+          jewellery, personal care products and more. Our
           online store brings you the latest in designer products straight out
           of fashion houses. 
         </Desc>

@@ -12,39 +12,47 @@ export const categories = [
     { 
         id: 1 , 
         image : cat1, 
-        name: "Men's Jackets"
+        name: "Men's Jackets", 
+        cat : [ "jackets","mjackets"] ,
     },
     { 
        id: 2 , 
        image :cat2, 
        name: "Women's Sweatshirts",
+       cat : ["sweatshirt","wsweatshirts"]
    },
    { 
        id: 3 , 
        image : cat3, 
-       name: "Women's Sweaters"
+       name: "Women's Sweaters",
+       cat : [ "sweaters" , "wsweaters" , ] 
    },
    { 
        id: 4 , 
        image : cat4, 
-       name: "Men's Sweatshirts"
+       name: "Men's Sweatshirts",
+       cat : ["sweatshirt", 'msweatshirts' ], 
    },{ 
        id: 5 , 
        image : cat5, 
-       name: "Dresses"
+       name: "Dresses",
+       cat : ["dresses", 'wdresses']
    },
    { 
        id: 6 , 
        image : cat6, 
-       name: "Casual Shirts"
+       name: "Casual Shirts", 
+       cat : ["shirts", "mcasualshirts"]
    },
    { 
        id: 7, 
        image : cat7, 
-       name: "Modern Kurtas"
+       name: "Modern Kurtas",
+       cat : ["kurtas", "wkurtas"]
    },{ 
        id: 8 , 
        image : cat8, 
-       name: "Jeans"
+       name: "Jeans", 
+       cat : ["jeans", "mjeans"], 
    }
    ]

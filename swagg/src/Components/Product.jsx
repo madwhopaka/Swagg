@@ -118,7 +118,7 @@ function Product(props) {
        </IconContainer>
        <p style = {{fontWeight:800}}>{props.item.brand.toUpperCase()}</p>
        <Name>
-           {props.item.name}
+           {props.item.title}
        </Name>
        <PriceContainer>
        <Price>Rs. {props.item.price}</Price>

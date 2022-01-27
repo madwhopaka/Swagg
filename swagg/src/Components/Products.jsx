@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState,useEffect} from 'react'
 import styled from 'styled-components' ; 
 import pro1 from '../images/pro1.jpg' ; 
 import pro2 from '../images/pro2.jpg' ; 
@@ -10,8 +10,11 @@ import pro7 from '../images/pro7.jpg' ;
 import pro8 from '../images/pro8.jpg' ; 
 import pro9 from '../images/pro9.jpg' ; 
 import Product from './Product';
+import axios from 'axios' ; 
 import {homeProducts} from '../utils/homeProducts.js' ; 
 import {Grid} from '@mui/material';
+
+const URL = "https://swagg-backend.herokuapp.com" ; 
 
 
  const Title = styled.h2 `
@@ -41,27 +44,38 @@ text-align:left;
 `
 
 
-function Products() {
+function Products({cat,filters,sort}) {
+    console.log(cat,filters,sort) ; 
+    const [products, setProducts] = useState([]) ; 
+    const [filteredProducts, setFilteredProducts] = useState([]) ;  
     
-    const title = "Dresses" ; 
-    const titleheading = title.toUpperCase() ; 
-    return (
-       <React.Fragment>
-            <ProductsComp />
-       </React.Fragment>
-    )
-}
 
-export default Products
+    useEffect( ()=> {
+        const getProducts = async ()=> {
+            try {
+                const res = await axios.get(cat? `${URL}/api/products/?category=${cat}`:`${URL}/api/products`);
+                    
+                    setProducts(res.data); 
+            }
+            catch(err){
+                    console.log(err) ; 
+            }
+        }
+        getProducts() ; 
+    },[cat])
 
-
-
-function ProductsComp() {
+    // useEffect(()=>{
+    //     cat && setFilteredProducts(
+    //         products.filter((item)=>Object.entries(filters)).every(([key,value])=>{
+    //             item[key]=value;
+    //         })
+    //     )
+    // })
     return (
         <Container>
         <Wrapper>
         <Grid container  rowSpacing={1} columnSpacing={{ xs: 1, sm: 1, md: 3, lg :1  }} sx = {{display:"flex",alignItems:"center" , justifyContent:"center", width:"80%", padding: "40px"}}>
-       {homeProducts.map((product)=> {
+       {products.map((product)=> {
            return (<Product item = {product}  key = {product.id} />) ; 
        })}
        </Grid>
@@ -69,5 +83,10 @@ function ProductsComp() {
       </Container>
     )
 }
+
+export default Products
+
+
+
 
 
