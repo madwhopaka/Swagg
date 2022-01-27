@@ -38,6 +38,7 @@ left: 0 ;
 flex-direction: column;
 right: 0 ; 
 margin:auto ; 
+margin-bottom: 20px ;
 padding: 10px; 
 justify-content: center;
 display:none; 

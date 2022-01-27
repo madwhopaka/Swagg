@@ -13,7 +13,7 @@ export const categories = [
         id: 1 , 
         image : cat1, 
         name: "Men's Jackets", 
-        cat : [ "jackets","mjackets"] ,
+        cat : [ "jacket","mjackets"] ,
     },
     { 
        id: 2 , 
