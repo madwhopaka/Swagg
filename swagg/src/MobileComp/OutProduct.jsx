@@ -40,12 +40,19 @@ function OutProduct({cat,filters,sort}) {
         getProducts() ; 
     },[cat]);
     console.log(products); 
+    console.log(filters)  ;
+    useEffect(()=>{
+        cat && filters && setFilteredProducts(
+            products.filter(item=>Object.entries(filters).every(([key,value])=>
+                item[key].includes(value)
+            )
+        ));     
+    },[cat,filters,sort]); 
+    console.log(filteredProducts);
     return (
-        <Container>
-          
-           <Wrapper>
-          
-           {products.map((product)=> {
+        <Container>        
+           <Wrapper>        
+           {filteredProducts.map((product)=> {
            return (<Product item = {product}  key = {product._id} />) ; 
        })}
        

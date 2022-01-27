@@ -64,18 +64,18 @@ function Products({cat,filters,sort}) {
         getProducts() ; 
     },[cat])
 
-    // useEffect(()=>{
-    //     cat && setFilteredProducts(
-    //         products.filter((item)=>Object.entries(filters)).every(([key,value])=>{
-    //             item[key]=value;
-    //         })
-    //     )
-    // })
+    useEffect(()=>{
+        cat && filters && setFilteredProducts(
+            products.filter(item=>Object.entries(filters).every(([key,value])=>
+                item[key].includes(value)
+            )
+        ));     
+    },[cat,filters,sort])
     return (
         <Container>
         <Wrapper>
         <Grid container  rowSpacing={1} columnSpacing={{ xs: 1, sm: 1, md: 3, lg :1  }} sx = {{display:"flex",alignItems:"center" , justifyContent:"center", width:"80%", padding: "40px"}}>
-       {products.map((product)=> {
+       {filteredProducts.map((product)=> {
            return (<Product item = {product}  key = {product.id} />) ; 
        })}
        </Grid>

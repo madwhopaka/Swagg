@@ -85,13 +85,13 @@ function ProductList() {
             <FilterContainer>
                 <Filter><FilterText>Filter Products:</FilterText>
                 <Select name = "color" onChange={handleFilters}>
-                    <Option disabled selected>
+                    <Option disabled selected value ="none">
                         Color
                     </Option>
-                    <Option>Blue</Option>
-                    <Option>Yellow</Option>
-                    <Option>Green</Option>
-                    <Option>Orange</Option>
+                    <Option value="black">Black</Option>
+                    <Option value= "white">White</Option>
+                    <Option value="grey">Grey</Option>
+                    <Option value="red">Red</Option>
 
                     </Select>
                     <Select name = "size" onChange = {handleFilters}>

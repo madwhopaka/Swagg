@@ -58,7 +58,7 @@ ${ImgContainer}:hover & {
 const Image = styled.img`
 transition: 0.3s ease-in;
 width: 180px;
-height: 220px; 
+height: 240px; 
 ${ImgContainer}:hover & {
         opacity: 0.7;
         transform: scale(1.01);
