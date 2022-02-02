@@ -114,14 +114,11 @@ function Product(props) {
         <ImgContainer > 
        <Image src = {props.item.image} />
        <IconContainer>
-          {/* <Link to= {item_link}> <SearchIcon style = {{margin:10}} />
-          </Link>
-          <Link>
+         <Link to= {item_link}> <SearchIcon style = {{margin:10,color:"black  "}} />
+         </Link>
           <LocalMallOutlinedIcon style = {{margin:10}} />
-          </Link> 
-          <Link>
            <FavoriteBorderOutlinedIcon style = {{margin:10}}/>
-           </Link> */}
+         
        </IconContainer>
        <p style = {{fontWeight:800}}>{props.item.brand.toUpperCase()}</p>
        <Name>
