@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components' ; 
+import {Link} from 'react-router-dom'  ;
 import pro1 from '../images/pro1.jpg' ; 
 import pro2 from '../images/pro2.jpg' ; 
 import pro3 from '../images/pro3.jpg' ; 
@@ -111,6 +112,7 @@ transition: 0.3s ease-in;
 
 function Product(props) {
     // console.log(`${process.env.PUBLIC_URL}/MobileComp/`) ;
+    const link = `/product/${props.item._id}`  ;
 
     return (
      
@@ -119,9 +121,11 @@ function Product(props) {
       
        <Image src= {props.item.image} />
        <IconContainer>
-           <SearchIcon style = {{margin:10}} />
+           <Link to= {link}>
+           <SearchIcon style = {{margin:10}} /> </Link>
            <LocalMallOutlinedIcon style = {{margin:10}} />
            <FavoriteBorderOutlinedIcon style = {{margin:10}}/>
+          
        </IconContainer>
        <p style = {{fontWeight:800, fontSize: "12px"}}>{props.item.brand.toUpperCase()}</p>
        <Name>

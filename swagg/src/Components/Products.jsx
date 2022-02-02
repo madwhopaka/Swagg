@@ -12,7 +12,9 @@ import pro9 from '../images/pro9.jpg' ;
 import Product from './Product';
 import axios from 'axios' ; 
 import {homeProducts} from '../utils/homeProducts.js' ; 
+import Loading from './Loading';
 import {Grid} from '@mui/material';
+import ProductError from './ProductError';
 
 const URL = "https://swagg-backend.herokuapp.com" ; 
 
@@ -48,19 +50,24 @@ function Products({cat,filters,sort}) {
     console.log(cat,filters,sort) ; 
     const [products, setProducts] = useState([]) ; 
     const [filteredProducts, setFilteredProducts] = useState([]) ;  
+    const [loading ,setLoading] = useState(false) ; 
     
 
     useEffect( ()=> {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
         const getProducts = async ()=> {
             try {
                 const res = await axios.get(cat? `${URL}/api/products/?category=${cat}`:`${URL}/api/products`);
-                    
+                setLoading(true) ; 
                     setProducts(res.data); 
             }
             catch(err){
                     console.log(err) ; 
             }
         }
+        setTimeout(() => {
+            setLoading(false) ; 
+        }, 2000);
         getProducts() ; 
     },[cat])
 
@@ -70,16 +77,31 @@ function Products({cat,filters,sort}) {
                 item[key].includes(value)
             )
         ));     
-    },[cat,filters,sort])
+    },[products,cat,filters]);
+
+
+    useEffect(()=>{
+        if (sort==='newest') {setFilteredProducts((prev)=>[...prev].sort((a,b)=>a.createdAt - b.createdAt)); }
+
+        else if (sort=='low')
+        {setFilteredProducts((prev)=>[...prev].sort((a,b)=>a.price- b.price)) ; }
+
+        else if (sort=='high') 
+        {setFilteredProducts((prev)=>[...prev].sort((a,b)=>b.price - a.price)) ; }
+       
+    },[sort]);
+
+
+
     return (
         <Container>
-        <Wrapper>
+        {loading?<Loading backdrop = {loading} />:<Wrapper>
         <Grid container  rowSpacing={1} columnSpacing={{ xs: 1, sm: 1, md: 3, lg :1  }} sx = {{display:"flex",alignItems:"center" , justifyContent:"center", width:"80%", padding: "40px"}}>
-       {filteredProducts.map((product)=> {
+       {filteredProducts!=[]?filteredProducts.map((product)=> {
            return (<Product item = {product}  key = {product.id} />) ; 
-       })}
+       }): <ProductError />}
        </Grid>
-       </Wrapper>
+       </Wrapper>}
       </Container>
     )
 }

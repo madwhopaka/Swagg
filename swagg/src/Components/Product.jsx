@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components' ; 
 import pro1 from '../images/pro1.jpg' ; 
+import { Link } from 'react-router-dom';
 import pro2 from '../images/pro2.jpg' ; 
 import pro3 from '../images/pro3.jpg' ; 
 import pro4 from '../images/pro4.jpg' ; 
@@ -18,7 +19,7 @@ import './grid.css'
 
 const ImgContainer = styled.div `
 flex:1 ;
-width:80% ;
+width:90% ;
 padding-bottom: 20px ;
 position:relative; 
 transition: 0.2s ease-in;
@@ -106,15 +107,21 @@ transition: 0.3s ease-in;
 
 
 function Product(props) {
+   const item_link  = `/product/${props.item._id}`
     return (
      
-      <Grid  className='grid' item sm={6}  lg = {3} md = {4} style = {{textAlign:"center", marginBottom:20 }} >
+      <Grid  className='grid' item sm={12}  lg = {3} md = {4} style = {{textAlign:"center", marginBottom:20 }} >
         <ImgContainer > 
        <Image src = {props.item.image} />
        <IconContainer>
-           <SearchIcon style = {{margin:10}} />
-           <LocalMallOutlinedIcon style = {{margin:10}} />
+          {/* <Link to= {item_link}> <SearchIcon style = {{margin:10}} />
+          </Link>
+          <Link>
+          <LocalMallOutlinedIcon style = {{margin:10}} />
+          </Link> 
+          <Link>
            <FavoriteBorderOutlinedIcon style = {{margin:10}}/>
+           </Link> */}
        </IconContainer>
        <p style = {{fontWeight:800}}>{props.item.brand.toUpperCase()}</p>
        <Name>
