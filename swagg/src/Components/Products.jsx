@@ -59,7 +59,7 @@ function Products({cat,filters,sort}) {
             try {
                 const res = await axios.get(cat? `${URL}/api/products/?category=${cat}`:`${URL}/api/products`);
                 setLoading(true) ; 
-                    setProducts(res.data); 
+                setProducts(res.data); 
             }
             catch(err){
                     console.log(err) ; 
@@ -97,9 +97,9 @@ function Products({cat,filters,sort}) {
         <Container>
         {loading?<Loading backdrop = {loading} />:<Wrapper>
         <Grid container  rowSpacing={1} columnSpacing={{ xs: 1, sm: 1, md: 3, lg :1  }} sx = {{display:"flex",alignItems:"center" , justifyContent:"center", width:"80%", padding: "40px"}}>
-       {filteredProducts!=[]?filteredProducts.map((product)=> {
+       {filteredProducts.map((product)=> {
            return (<Product item = {product}  key = {product.id} />) ; 
-       }): <ProductError />}
+       })}
        </Grid>
        </Wrapper>}
       </Container>

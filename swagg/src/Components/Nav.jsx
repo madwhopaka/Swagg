@@ -7,6 +7,55 @@ import Badge from '@mui/material/Badge' ;
 import { mobile } from "../responsive.js";
 import Register from "../pages/Register.jsx";
 import Login from "../pages/Login.jsx";
+import { useSelector } from "react-redux";
+
+
+
+
+function Nav() {
+  const cart  = useSelector(state=>state.cart) ; 
+  return (
+    <Container>
+      <Wrapper>
+        <Left>
+          <Language>EN</Language>
+          <SearchContainer>
+            <Input placeholder="Search"></Input>
+            <Search sx={{ color: "gray", fontSize: 20 }} />
+          </SearchContainer>
+        </Left>
+        <Center>
+          <Logo>SWAGG.</Logo>
+        </Center>
+        <Right>
+          <Linkss>
+          <At style = {{textDecoration:"none"}} href="/register">
+            <MenuItem>REGISTER</MenuItem>
+            {/* <Slash>/</Slash> */}
+          </At>
+          <Hr />
+          <At href="/login" style = {{textDecoration:"none"}}>
+            <MenuItem>LOGIN</MenuItem>
+          </At>
+          </Linkss>
+          <MenuItem>
+         <Link style= {{color:"black"}} to= '/cart'>
+         <Badge badgeContent={cart.quantity} color="warning">
+          <LocalMallOutlinedIcon sx={{ color: "gray", fontSize: 25 }} />
+          </Badge></Link>
+          </MenuItem>
+        </Right>
+      </Wrapper>
+    </Container>
+  );
+}
+
+export default Nav;
+
+
+
+
+
 
 const Container = styled.div`
   ${mobile({ height: "50px" })}
@@ -103,41 +152,3 @@ const Hr = styled.hr `
  display:none ;
  ${mobile({display:'flex', width:"100%", height: "0.5px", textAlign:"center",marginLeft:"5px", backgroundColor:'black', border:'none'})}
 `
-
-function Nav() {
-  return (
-    <Container>
-      <Wrapper>
-        <Left>
-          <Language>EN</Language>
-          <SearchContainer>
-            <Input placeholder="Search"></Input>
-            <Search sx={{ color: "gray", fontSize: 20 }} />
-          </SearchContainer>
-        </Left>
-        <Center>
-          <Logo>SWAGG.</Logo>
-        </Center>
-        <Right>
-          <Linkss>
-          <At style = {{textDecoration:"none"}} href="/register">
-            <MenuItem>REGISTER</MenuItem>
-            {/* <Slash>/</Slash> */}
-          </At>
-          <Hr />
-          <At href="/login" style = {{textDecoration:"none"}}>
-            <MenuItem>LOGIN</MenuItem>
-          </At>
-          </Linkss>
-          <MenuItem>
-          <Badge badgeContent={1} color="warning">
-          <LocalMallOutlinedIcon sx={{ color: "gray", fontSize: 25 }} />
-          </Badge>
-          </MenuItem>
-        </Right>
-      </Wrapper>
-    </Container>
-  );
-}
-
-export default Nav;

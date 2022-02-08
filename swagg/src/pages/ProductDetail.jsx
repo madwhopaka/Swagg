@@ -1,13 +1,124 @@
-import React from 'react'
+import React, { useEffect, useState} from 'react'
 import Anouncement from '../Components/Anouncement'
+import { useLocation } from 'react-router-dom'
 import Nav from '../Components/Nav'
 import Newsletter from '../Components/Newsletter'
 import styled from 'styled-components'
 import Footer from '../Components/Footer' 
 import prode1 from '../images/prode1.jpg';
+import axios from 'axios'
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import { mobile } from '../responsive'
+import { publicRequest } from '../requestMethods';
+import Loading from '../Components/Loading' ; 
+import { useDispatch } from 'react-redux' ;
+import { addProduct } from '../redux/cartRedux'
+
+
+
+const BASE_URL = "https://swagg-backend.herokuapp.com/api";
+
+function ProductDetail() {
+
+    const location = useLocation() ; 
+    const id = location.pathname.split('/')[2] ; 
+    console.log(id) ; 
+    const [product, setProduct] = useState({}) ; 
+    const [backdrop, setBackdrop] = useState(false) ; 
+    const [quantity, setQuantity] = useState(1) ; 
+    const [color, setColor] = useState("") ; 
+    const [size, setSize] = useState("") ; 
+    const dispatch = useDispatch() ; 
+
+    const handleAddtoCart = ()=> {
+      dispatch(addProduct({...product,quantity,color,size})) ; 
+    }
+
+    const handleQuantity = (para)=> {
+        if (para==="a") setQuantity(quantity+1) ; 
+        else if (para==="d"&& quantity>1) setQuantity (quantity-1) ; 
+    }
+
+    useEffect (()=> {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        const getProduct = async ()=>{
+            try {
+                 const res  = await axios.get(`${BASE_URL}/products/find/${id}`);
+                 console.log(res);
+                 setBackdrop(true) ;
+                 setProduct(res.data) ; 
+                 console.log(product) ; 
+                 setTimeout(() => {
+                    product && setBackdrop(false) ; 
+                }, 2000);
+            }
+            catch(err) {
+                console.log("Hello how are you ? ") ; 
+                console.log(err) ; 
+            }
+        }
+        getProduct() ; 
+        
+
+    },[id]);
+
+    return (
+      <Container>
+          <Nav />
+          <Anouncement />
+          <Wrapper>
+         {backdrop && !product ? <Loading backdrop ={backdrop}/>:<React.Fragment> <ImgContainer>
+              <Image src = {product.image} />
+              </ImgContainer>
+              <InfoContainer>
+              <Brand>{product.brand}</Brand>
+                  <Title>
+                {product.title}
+                  </Title>
+                  <Desc>{product.desc}</Desc>
+                  <PriceContainer><Price> Rs. {product.price}</Price> <strike style = {{color:"grey", fontWeight: "100",fontSize: "20px"}}>{product.cutprice}</strike></PriceContainer>
+                  <P style = {{color:"grey"}}>Price exclusive of taxes</P >  
+                  <FilterContainer>
+                      <Filter>
+                          <FilterTitle>Color:</FilterTitle>
+                           {
+                            product.color && product.color.map((color)=>{
+                                   return <FilterColor color = {color} key = {color} onClick = {()=>setColor(color)}></FilterColor>
+                               })
+                           }                    
+                      </Filter>
+                      <Filter>
+                          <FilterTitle>Size :</FilterTitle>
+                          <FilterSize onChange= {(e)=> {console.log(e.target.value); setSize(e.target.value);}} >
+                           { product.size &&  product.size.map((size)=>{
+                                 return  <FilterSizeOption key = {size} >{size}</FilterSizeOption>
+                                 
+                             })}
+                          </FilterSize>
+                      </Filter>
+                  </FilterContainer>
+                  <AddContainer>
+                      <AmountContainer>
+                          <RemoveIcon onClick = { ()=> {handleQuantity("d")}}/>
+                          <Amount>{quantity}</Amount>
+                          <AddIcon onClick = {()=>{handleQuantity("a")}} />
+                      </AmountContainer>
+                      <Button onClick = {handleAddtoCart}>ADD TO CART </Button>
+                  </AddContainer>
+                 </InfoContainer></React.Fragment>
+}
+          </Wrapper>
+          <Newsletter />
+          <Footer />
+
+      </Container>
+    )
+}
+
+export default ProductDetail
+
+
 
 
 const Container = styled.div `
@@ -43,6 +154,7 @@ ${mobile({flexDirection:"column", padding:"10px",  alignItems:"center", justifyC
 
 const Image = styled.img`
 width: 70%;
+${mobile({width:"90vw"})}
 object-fit: cover;
  `
 
@@ -156,16 +268,25 @@ border-radius: 10px ;
 
 const Button = styled.button `
 outline:none ; 
+transition: 0.5s ease-out  ;
 padding : 10px; 
 background:white; 
-${mobile({ textAlign:"center", borderRadius:"20px", border:"none", background:"#2C4152", color:"white", transition: "0.3s ease-in"})}
-border : 3px solid #2C4152 ; 
+box-shadow: 2px 2px 5px gray;
+${mobile({ textAlign:"center", transition: "0.3s ease-in"})}
+border : 2px solid #2C4152 ; 
 font-weight: 600;
 
 &:hover {
-    background: whitesmoke ;
-    ${mobile({background:"slateblue", transform:"scale(1.05)"})}
+    background: #2C4152 ;
+    color: white ;
 }
+
+&:active {
+ box-shadow: 0px 0px 0px ; 
+ 
+
+}
+   
 &::before {
     ${mobile({ textAlign:"center", borderRadius:"20px", border:"none", background:"#2C4152", color:"white"})}
 }
@@ -182,59 +303,3 @@ font-weight: 600;
 
 const P = styled.p `
 ${mobile({color:"lightgray", textAlign:"center  "})}`
-
-function ProductDetail() {
-    return (
-      <Container>
-          <Nav />
-          <Anouncement />
-          <Wrapper>
-              <ImgContainer>
-              <Image src = {prode1} />
-              </ImgContainer>
-              <InfoContainer>
-              <Brand>CAMPUS SUTRA</Brand>
-                  <Title>
-                      ColourBlack Hooded Sweatshirt 
-                  </Title>
-                  <Desc>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corrupti tempora culpa adipisci distinctio voluptates, quo possimus enim veniam dolor similique officia quae nobis, beatae, aperiam cum ex labore quis eligendi.</Desc>
-                  <PriceContainer><Price>Rs. 1,000</Price> <strike style = {{color:"grey", fontWeight: "100",fontSize: "20px;"}}>1,699</strike></PriceContainer>
-                  <P style = {{color:"grey"}}>Price inclusive of all taxes</P >
-                  
-                  <FilterContainer>
-                      <Filter>
-                          <FilterTitle>Color:</FilterTitle>
-                              <FilterColor color = "black"></FilterColor>
-                              <FilterColor color = "grey"></FilterColor>
-                              <FilterColor color = "maroon"></FilterColor>
-                      </Filter>
-                      <Filter>
-                          <FilterTitle>Size :</FilterTitle>
-                          <FilterSize>
-                              <FilterSizeOption>S</FilterSizeOption>
-                              <FilterSizeOption>M</FilterSizeOption>
-                              <FilterSizeOption>L</FilterSizeOption>
-                              <FilterSizeOption>XL</FilterSizeOption>
-                              
-                          </FilterSize>
-                      </Filter>
-                  </FilterContainer>
-                  <AddContainer>
-                      <AmountContainer>
-                          <RemoveIcon/>
-                          <Amount>0</Amount>
-                          <AddIcon />
-                      </AmountContainer>
-                      <Button>ADD TO CART </Button>
-                  </AddContainer>
-                 </InfoContainer>
-
-          </Wrapper>
-          <Newsletter />
-          <Footer />
-
-      </Container>
-    )
-}
-
-export default ProductDetail

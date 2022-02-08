@@ -126,7 +126,7 @@ function Product(props) {
        </Name>
        <PriceContainer>
        <Price>Rs. {props.item.price}</Price>
-       <strike style = {{fontSize:12, color: "gray",marginLeft:5}}>Rs. {props.item.cutprice}</strike>
+       <strike style = {{fontSize:"12px", color: "gray",marginLeft:5}}>Rs. {props.item.cutprice}</strike>
        </PriceContainer>  
        <ViewMore>View Details</ViewMore>
         </ImgContainer>

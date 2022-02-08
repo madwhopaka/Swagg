@@ -22,7 +22,7 @@ function App() {
           </Route>
           <Route path="/login" element={!user? <Login />: <Navigate replace to="/" />} />
           <Route path="/register" element={!user? <Register />: <Navigate replace to="/" />} />
-          <Route path = '/cart/:uid' element = {<Cart />}> 
+          <Route path = '/cart' element = {<Cart />}> 
           </Route>
           <Route path = '/product/:id' element = {<ProductDetail />}>
           </Route>

@@ -9,6 +9,95 @@ import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import {mobile} from '../responsive.js';
 import mobileband from '../images/final-band-mobile.png'
+import { useSelector } from 'react-redux';
+
+
+
+function Cart() {
+    const cart  = useSelector(state=> state.cart)  ;
+    console.log(cart) ; 
+    
+    return (
+       <Container>
+           <Nav />
+           <Anouncement />
+           <Wrapper>
+               <Title> YOUR BAG </Title>
+               <Top>
+               <TopButton>CONTINUE ADDING</TopButton>
+               <TopTexts>
+               <TopText>Shopping Bag(2)</TopText>
+               <TopText>Your Wishlist(0)</TopText>
+               </TopTexts>
+               <TopButton type ="filled">CHECKOUT NOW</TopButton>
+               </Top>
+               <Bottom>
+                   <Info> {
+                       cart.products.map(product=> (
+                           
+                           <>
+                           <Product key = {product._id}>
+                       <ProductDetails>
+                          <Image src = {product.image}/>
+                          <Details>
+                          <ProductName><b>Product: </b> {product.brand} {product.title}</ProductName>
+                          <ProductId><b>Id: </b>{product._id.substring(0,15)}...</ProductId>
+                          <ProductColor color= {product.color} />
+                          <ProductSize><b>Size: </b>{product.size}</ProductSize>
+                          </Details>
+                       </ProductDetails>   
+                       <PriceDetails>
+                           <ProductAmountContainer>
+                               <AddIcon />
+                            <ProductAmount>
+                              {product.quantity}
+                            </ProductAmount>
+                               <RemoveIcon />
+                           </ProductAmountContainer>
+                           <ProductPrice>Rs. {product.price}</ProductPrice>
+                           <strike>{product.cutprice}</strike>
+                        </PriceDetails>  
+                    </Product>
+                    <Hr /></>
+                       ))
+                   }     
+                    </Info>
+                   <Summary>
+                       <SummaryTitle>ORDER SUMMARY</SummaryTitle>
+                       <SummaryItem>
+                           <SummaryItemText>Subtotal</SummaryItemText>
+                           <SummaryItemPrice>Rs. 6,600</SummaryItemPrice>
+                       </SummaryItem>
+                       <SummaryItem>
+                           <SummaryItemText>Shipping Cost</SummaryItemText>
+                           <SummaryItemPrice>Rs. 79</SummaryItemPrice>
+                       </SummaryItem>
+                       <SummaryItem>
+                           <SummaryItemText>Special Discount</SummaryItemText>
+                           <SummaryItemPrice>- Rs. 81</SummaryItemPrice>
+                       </SummaryItem>
+                       <SummaryItem type = "total">
+                           <SummaryItemText>Total</SummaryItemText>
+                           <SummaryItemPrice>Rs. 6,598</SummaryItemPrice>
+                       </SummaryItem>
+                       <Button>CHECKOUT NOW</Button>
+                   </Summary>
+               </Bottom>
+           </Wrapper>
+           <SubCont>
+               <BandImage src ={mobileband} alt = "hello"/>
+               </SubCont>
+           <Newsletter />
+           <Footer />
+       </Container>
+    )
+}
+
+export default Cart
+
+const SubCont =  styled.div ` 
+display:none; 
+${mobile({display:"flex", margin: "10px 0px 10px 0px "})}`
 
 const Container = styled.div `
 ${mobile({display:"flex", flexDirection:"column", justifyContent:"center" })}` ; 
@@ -85,7 +174,7 @@ ${mobile({ justifyConten:"space-between", flex:"1", width: "100%"})}` ;
 
 const Image = styled.img`
 width: 150px;
-${mobile({width:"150px", height:"180px"})}
+${mobile({width:"170px", height:"185px"})}
 margin:15px;` ;
 
 const Details = styled.div`
@@ -189,95 +278,3 @@ const BandImage = styled.img `
 display:"none" ; 
 ${mobile({display:"flex",alignItems:"center",width:"100vw",margin:"5px 0px 20px 0px" })}
 `
-
-function Cart() {
-    return (
-       <Container>
-           <Nav />
-           <Anouncement />
-           <Wrapper>
-               <Title> YOUR BAG </Title>
-               <Top>
-               <TopButton>CONTINUE ADDING</TopButton>
-               <TopTexts>
-               <TopText>Shopping Bag(2)</TopText>
-               <TopText>Your Wishlist(0)</TopText>
-               </TopTexts>
-               <TopButton type ="filled">CHECKOUT NOW</TopButton>
-               </Top>
-               <Bottom>
-                   <Info><Product>
-                       <ProductDetails>
-                          <Image src = "https://cdn.shopify.com/s/files/1/0752/6435/products/BRISKGREENSWEATSHIRT_4_5a3f790b-2bf1-49a3-921b-d6a724db87e5_765x.jpg?v=1635397599"/>
-                          <Details>
-                          <ProductName><b>Product: </b>BRISK- MENS ZIPPER JACKET</ProductName>
-                          <ProductId><b>Id: </b>23901920293</ProductId>
-                          <ProductColor color='#CCD3CC' />
-                          <ProductSize><b>Size: </b>41.5</ProductSize>
-                          </Details>
-                       </ProductDetails>   
-                       <PriceDetails>
-                           <ProductAmountContainer>
-                               <AddIcon />
-                            <ProductAmount>
-                                2
-                            </ProductAmount>
-                               <RemoveIcon />
-                           </ProductAmountContainer>
-                           <ProductPrice>Rs. 4,500</ProductPrice>
-                        </PriceDetails>  
-                    </Product>
-                    <Hr />
-                    <Product>
-                       <ProductDetails>
-                          <Image src = "https://assets.myntassets.com/f_webp,dpr_1.5,q_60,w_210,c_limit,fl_progressive/assets/images/16343204/2021/12/2/284f4219-a0fd-481c-8050-090b9ac4a33f1638441016731RedTapeMenBlack1.jpg"/>
-                          <Details>
-                          <ProductName><b>Product: </b>REDTAPE MEN BLACK SHOES</ProductName>
-                          <ProductId><b>Id: </b>3923020293</ProductId>
-                          <ProductColor color='black' />
-                          <ProductSize><b>Size: </b>8</ProductSize>
-                          </Details>
-                       </ProductDetails>   
-                       <PriceDetails>
-                           <ProductAmountContainer>
-                               <AddIcon />
-                            <ProductAmount>
-                                1
-                            </ProductAmount>
-                               <RemoveIcon />
-                           </ProductAmountContainer>
-                           <ProductPrice>Rs. 2,100</ProductPrice>
-                        </PriceDetails>  
-                    </Product>
-                    <Hr />
-                    </Info>
-                   <Summary>
-                       <SummaryTitle>ORDER SUMMARY</SummaryTitle>
-                       <SummaryItem>
-                           <SummaryItemText>Subtotal</SummaryItemText>
-                           <SummaryItemPrice>Rs. 6,600</SummaryItemPrice>
-                       </SummaryItem>
-                       <SummaryItem>
-                           <SummaryItemText>Shipping Cost</SummaryItemText>
-                           <SummaryItemPrice>Rs. 79</SummaryItemPrice>
-                       </SummaryItem>
-                       <SummaryItem>
-                           <SummaryItemText>Special Discount</SummaryItemText>
-                           <SummaryItemPrice>- Rs. 81</SummaryItemPrice>
-                       </SummaryItem>
-                       <SummaryItem type = "total">
-                           <SummaryItemText>Total</SummaryItemText>
-                           <SummaryItemPrice>Rs. 6,598</SummaryItemPrice>
-                       </SummaryItem>
-                       <Button>CHECKOUT NOW</Button>
-                   </Summary>
-               </Bottom>
-           </Wrapper>
-           <BandImage src ={mobileband} alt = "hello"/>
-           <Newsletter />
-           <Footer />
-       </Container>
-    )
-}
-
-export default Cart

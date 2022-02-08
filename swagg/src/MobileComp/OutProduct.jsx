@@ -45,10 +45,10 @@ function OutProduct({cat,filters,sort}) {
                     console.log(err) ; 
             }
         }
+        getProducts() ; 
         setTimeout(() => {
             setBackdrop(false) ; 
         }, 2000);
-        getProducts() ; 
     },[cat]);
     
 

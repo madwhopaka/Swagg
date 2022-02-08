@@ -1,5 +1,6 @@
-import React from 'react'
+import React,{useState} from 'react'
 import styled from 'styled-components' ; 
+import { useLocation } from 'react-router-dom';
 import {Link} from 'react-router-dom'  ;
 import pro1 from '../images/pro1.jpg' ; 
 import pro2 from '../images/pro2.jpg' ; 
@@ -14,6 +15,8 @@ import {Grid} from '@mui/material';
 import LocalMallOutlinedIcon from '@mui/icons-material/LocalMallOutlined';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import SearchIcon from '@mui/icons-material/Search';
+import { useEffect } from 'react';
+
 
 
 const ImgContainer = styled.div `
@@ -112,8 +115,10 @@ transition: 0.3s ease-in;
 
 function Product(props) {
     // console.log(`${process.env.PUBLIC_URL}/MobileComp/`) ;
-    const link = `/product/${props.item._id}`  ;
-
+    const link = `/product/${props.item._id}`  ; 
+    
+    
+   
     return (
      
      
