@@ -30,7 +30,7 @@ function App() {
           </Route>
           <Route path = '/pay' element = {<Pay />}> 
           </Route>
-          <Route path = '/sucess' element = {<Success />}>
+          <Route path = 'order/success' element = {<Success />}>
           </Route>
         </Routes>
     </div>

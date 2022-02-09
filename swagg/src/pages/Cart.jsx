@@ -1,6 +1,8 @@
 
 import React from 'react'
 import styled from 'styled-components'
+import axios from 'axios' ; 
+import { useNavigate } from 'react-router-dom';
 import Anouncement from '../Components/Anouncement';
 import Footer from '../Components/Footer';
 import Nav from '../Components/Nav';
@@ -12,9 +14,80 @@ import mobileband from '../images/final-band-mobile.png'
 import { useSelector } from 'react-redux';
 
 
+const URL  = "https://swagg-backend.herokuapp.com"; 
+
+const loadScript= ()=> {
+    return new Promise (resolve=> {
+        const script = document.createElement('script'); 
+        script.src = "https://checkout.razorpay.com/v1/checkout.js"; 
+        document.body.appendChild(script) ; 
+        script.onload = ()=> {
+            resolve(true)  ; 
+        }
+        script.onerror = ()=> {
+            resolve(false)  ;
+        }
+    })  
+}
 
 function Cart() {
+
+
+    const nav = useNavigate() ; 
     const cart  = useSelector(state=> state.cart)  ;
+    const displayRazorPay = async (amount)=> {
+
+        const res = await loadScript() ; 
+        console.log(res)  ;
+        if (!res)  {
+            console.log("This is it"); 
+            alert("You are offline");
+        }  
+        const payload = {
+            amount: cart.total , 
+        }
+        const data = await axios.post(`${URL}/api/checkout/order`, payload) ;
+        console.log(data); 
+        const am =cart.total*100 ;
+
+        const options = {
+              id : data.data.id , 
+              key: "rzp_test_ru5aXnF85lb0mo",
+              amount : cart.total * 100 , 
+              image: "http://dslv9ilpbe7p1.cloudfront.net/anefDVIpM4le32yduNYT2A_store_banner_image.jpeg",
+              name: "Swagg online " , 
+              description : "swagg online fashion store", 
+              currency: "INR" , 
+              handler : async function  (response) {
+                  
+                  const paymentId = response.razorpay_payment_id;
+                  console.log(paymentId) ; 
+                  const url = `${URL}/api/checkout/capture/${paymentId}`;
+                  const captureResponse = await axios.post(url, {amount:am, currency:"INR"})
+                  const successObj = JSON.parse(captureResponse.data);
+                  console.log(successObj) ; 
+                  const captured = successObj.captured;
+                  if (captured) {
+                      alert("payment successful"); 
+                   
+                 const address= "301B,Sun Enclave,Bhagat Singh Nagar,Opp. Dmart, Goregaon West, Mumbai-400097, ";
+                      
+                      nav('/order/success', {state:  {cart,address}} ,{replace:true}); 
+                  }
+                  
+              } , 
+
+              prefill : {
+                  name: "Swagg Men & Women Fashion"        }
+
+        };
+
+        const paymentObject = new window.Razorpay(options) ; 
+        paymentObject.open() ; 
+    }
+
+
+   
     console.log(cart) ; 
     
     return (
@@ -33,8 +106,7 @@ function Cart() {
                </Top>
                <Bottom>
                    <Info> {
-                       cart.products.map(product=> (
-                           
+                       cart.products.map(product=> (     
                            <>
                            <Product key = {product._id}>
                        <ProductDetails>
@@ -54,8 +126,8 @@ function Cart() {
                             </ProductAmount>
                                <RemoveIcon />
                            </ProductAmountContainer>
-                           <ProductPrice>Rs. {product.price}</ProductPrice>
-                           <strike>{product.cutprice}</strike>
+                           <ProductPrice>Rs. {product.price* product.quantity}</ProductPrice>
+                           <strike>{product.cutprice*product.quantity}</strike>
                         </PriceDetails>  
                     </Product>
                     <Hr /></>
@@ -66,7 +138,7 @@ function Cart() {
                        <SummaryTitle>ORDER SUMMARY</SummaryTitle>
                        <SummaryItem>
                            <SummaryItemText>Subtotal</SummaryItemText>
-                           <SummaryItemPrice>Rs. 6,600</SummaryItemPrice>
+                           <SummaryItemPrice>{cart.total}</SummaryItemPrice>
                        </SummaryItem>
                        <SummaryItem>
                            <SummaryItemText>Shipping Cost</SummaryItemText>
@@ -74,13 +146,13 @@ function Cart() {
                        </SummaryItem>
                        <SummaryItem>
                            <SummaryItemText>Special Discount</SummaryItemText>
-                           <SummaryItemPrice>- Rs. 81</SummaryItemPrice>
+                           <SummaryItemPrice>- Rs. 79</SummaryItemPrice>
                        </SummaryItem>
                        <SummaryItem type = "total">
                            <SummaryItemText>Total</SummaryItemText>
-                           <SummaryItemPrice>Rs. 6,598</SummaryItemPrice>
+                           <SummaryItemPrice>{cart.total}</SummaryItemPrice>
                        </SummaryItem>
-                       <Button>CHECKOUT NOW</Button>
+                       <Button onClick = {displayRazorPay}>CHECKOUT NOW</Button>
                    </Summary>
                </Bottom>
            </Wrapper>
@@ -233,6 +305,7 @@ flex:1 ;
 display:flex; 
 height: 50vh;
 flex-direction: column;
+padding-bottom: 20px ;
 ${mobile({width:"90%",  justifyContent:"center", color:"#3b3c36"})}
 margin: 20px ;
 border : 0.5px solid lightgray ;

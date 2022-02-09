@@ -57,8 +57,9 @@ function Products({cat,filters,sort}) {
         window.scrollTo({ top: 0, behavior: 'smooth' });
         const getProducts = async ()=> {
             try {
-                const res = await axios.get(cat? `${URL}/api/products/?category=${cat}`:`${URL}/api/products`);
                 setLoading(true) ; 
+                const res = await axios.get(cat? `${URL}/api/products/?category=${cat}`:`${URL}/api/products`);
+                
                 setProducts(res.data); 
             }
             catch(err){
