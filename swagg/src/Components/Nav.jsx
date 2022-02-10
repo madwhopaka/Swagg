@@ -11,6 +11,7 @@ import Login from "../pages/Login.jsx";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { logout } from "../redux/userSlice.js";
+import { clearCart } from "../redux/cartRedux.js";
 import { fontSize } from "@mui/system";
 
 
@@ -24,6 +25,7 @@ function Nav() {
 
   const handleLogout = ()=> {
       dispatch(logout()); 
+      dispatch(clearCart()); 
   } 
   
    if (user!=null)  {
