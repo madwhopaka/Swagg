@@ -10,11 +10,13 @@ import Login from './pages/Login.jsx'  ;
 import Cart from './pages/Cart'
 import Pay from './Pay';
 import Success from './Success';
+import { useSelector } from 'react-redux';
 import React from 'react';
 
 
 function App() {
-  const user = false ; 
+  const user = useSelector((state) => state.user.currentUser);
+  
   return (
     <div>
         <Routes>

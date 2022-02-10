@@ -1,9 +1,59 @@
 import styled from 'styled-components' ; 
+import { useState } from 'react';
 import registerbg from '../images/registerbbg.jpg'
 import icon from '../images/logoicon.png' ; 
 import {mobile} from '../responsive.js' ; 
 import {Link} from 'react-router-dom' ; 
 import bgmob from '../images/bgmob.jpg';
+
+
+
+
+function Register() {
+
+const [firstName, setFirst] = useState(''); 
+const [lastName,setLast] = useState('') ; 
+
+    return (
+       <Container>
+         <WrapperContainer>
+             <Logo><Icon src= {icon} />SWAGG.</Logo>
+             <Title>Create a new account</Title>
+             <InputWrapper>
+             <Label> <p>Name</p></Label>
+             <InputContainer>
+             <Input placeholder='John'  />
+             <Input placeholder='Doe' />
+             </InputContainer >
+             <Label> <p>Email</p></Label>
+             <InputContainer>
+             <Input style = {{width: "100%"}}placeholder='johndoe@yahoo.in' />
+             </InputContainer >
+             <Label> <p>Password</p></Label>
+             <InputContainer>
+             <Input style = {{width: "100%"}}placeholder='Create a password' />
+             </InputContainer >
+             <Label> <p>Confirm Password</p></Label>
+             <InputContainer>
+             <Input style = {{width: "100%"}}placeholder='Both password fields should match.' />
+             </InputContainer ></InputWrapper>
+             <Agreement>
+                <AgreementText>
+                    By creating an account, I agree to the <b>Terms of Use</b> & <b>Privacy Policy</b>
+                </AgreementText>
+             </Agreement>
+             <Button>
+                 REGISTER
+             </Button>
+             <AlreadyHave> <AlreadyHaveText>Already have an account ?  <Link style= {{color: " #1b385e"}} replace to ="/login" >Login</Link></AlreadyHaveText></AlreadyHave>
+         </WrapperContainer>
+       </Container>
+    )
+}
+
+export default Register
+
+
 
 
 const Container = styled.div `
@@ -117,43 +167,3 @@ const AlreadyHave = styled.div`
 const AlreadyHaveText = styled.p `
     
 `
-
-function Register() {
-    return (
-       <Container>
-         <WrapperContainer>
-             <Logo><Icon src= {icon} />SWAGG.</Logo>
-             <Title>Create a new account</Title>
-             <InputWrapper>
-             <Label> <p>Name</p></Label>
-             <InputContainer>
-             <Input placeholder='John' />
-             <Input placeholder='Doe' />
-             </InputContainer >
-             <Label> <p>Email</p></Label>
-             <InputContainer>
-             <Input style = {{width: "100%"}}placeholder='johndoe@yahoo.in' />
-             </InputContainer >
-             <Label> <p>Password</p></Label>
-             <InputContainer>
-             <Input style = {{width: "100%"}}placeholder='Create a password' />
-             </InputContainer >
-             <Label> <p>Confirm Password</p></Label>
-             <InputContainer>
-             <Input style = {{width: "100%"}}placeholder='Both password fields should match.' />
-             </InputContainer ></InputWrapper>
-             <Agreement>
-                <AgreementText>
-                    By creating an account, I agree to the <b>Terms of Use</b> & <b>Privacy Policy</b>
-                </AgreementText>
-             </Agreement>
-             <Button>
-                 REGISTER
-             </Button>
-             <AlreadyHave> <AlreadyHaveText>Already have an account ?  <Link style= {{color: " #1b385e"}} replace to ="/login" >Login</Link></AlreadyHaveText></AlreadyHave>
-         </WrapperContainer>
-       </Container>
-    )
-}
-
-export default Register

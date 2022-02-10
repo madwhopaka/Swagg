@@ -1,10 +1,76 @@
 import styled from 'styled-components' ; 
+import {useState, useEffect} from 'react' ; 
 import registerbg from '../images/registerbbg.jpg'
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import icon from '../images/logoicon.png' ; 
 import {mobile} from '../responsive.js' ; 
 import bgmob from '../images/bgmob.jpg'
+import { useSelector } from 'react-redux';
+import { login } from '../redux/apiCalls';
+import Loading from '../Components/Loading';
+import { CircularProgress } from '@mui/material';
 
+
+
+function Login() {
+    const [username, setUsername] = useState(''); 
+    const [password, setPassword] = useState('') ; 
+    const error = useSelector(state=> state.user.error) ; 
+    const dispatch = useDispatch() ; 
+    const dataFetching = useSelector(state=> state.user.isFetching) ; 
+    const handleLogin = async(e) => {
+                e.preventDefault() ; 
+                login(dispatch, {username,password}) ; 
+    }
+    const [errmsg, setErrorMsg] = useState('') ; 
+    useEffect(()=> {
+            error && setErrorMsg("Invalid/Null credentials. If correct Try Again "); 
+            setTimeout(()=> {
+                    setErrorMsg('') ; 
+            },3000)
+    }, [error])
+
+    return (
+       <Container>
+          
+          <WrapperContainer>
+             <Logo><Icon src= {icon} />SWAGG.</Logo>
+             <Title>Login</Title>
+             <InputWrapper>
+             <Label> <p>Email</p></Label>
+             <InputContainer>
+             <Input style = {{width: "100%"}}placeholder='johndoe@yahoo.in' onChange = {(e)=> setUsername(e.target.value)} />
+             </InputContainer >
+             <Label> <p>Password</p></Label>
+             <InputContainer>
+             <Input style = {{width: "100%"}}placeholder='Enter your password' type= "password" onChange = {(e)=> setPassword(e.target.value)}/>
+             </InputContainer >
+             <Forgot>
+                <ForgotText href='#'>Forgot Password ? </ForgotText>
+             </Forgot>
+            </InputWrapper>
+           
+             <Button onClick={handleLogin}>
+                 LOGIN
+             </Button>
+             {dataFetching? <CircularProgress /> : <></> }
+           { error &&    <Error>
+                {errmsg}
+             </Error> } 
+             <AlreadyHave> <AlreadyHaveText>Don't have an account ?  <Link style= {{color: " #1b385e"}} to='/register'>Signup</Link></AlreadyHaveText></AlreadyHave>
+         </WrapperContainer>
+       </Container>
+    )
+}
+
+export default Login ; 
+
+
+const Error = styled.span `
+color:red ; 
+text-align: center; 
+margin-bottom:10px;`
 const Container = styled.div `
 width: 100%; 
 position: relative; 
@@ -123,33 +189,3 @@ const ForgotText = styled.a `
     margin-left: 20px;
     color: #1b385e;
 `
-
-function Register() {
-    return (
-       <Container>
-         <WrapperContainer>
-             <Logo><Icon src= {icon} />SWAGG.</Logo>
-             <Title>Login</Title>
-             <InputWrapper>
-             <Label> <p>Email</p></Label>
-             <InputContainer>
-             <Input style = {{width: "100%"}}placeholder='johndoe@yahoo.in' />
-             </InputContainer >
-             <Label> <p>Password</p></Label>
-             <InputContainer>
-             <Input style = {{width: "100%"}}placeholder='Enter your password' />
-             </InputContainer >
-             <Forgot>
-                <ForgotText href='#'>Forgot Password ? </ForgotText>
-             </Forgot>
-            </InputWrapper>
-             <Button>
-                 LOGIN
-             </Button>
-             <AlreadyHave> <AlreadyHaveText>Don't have an account ?  <Link style= {{color: " #1b385e"}} to='/register'>Signup</Link></AlreadyHaveText></AlreadyHave>
-         </WrapperContainer>
-       </Container>
-    )
-}
-
-export default Register

@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import Search from "@mui/icons-material/Search";
+import {useEffect} from 'react' ; 
 import { Link } from "react-router-dom";
 import LocalMallOutlinedIcon from "@mui/icons-material/LocalMallOutlined";
 import Badge from '@mui/material/Badge' ; 
@@ -8,12 +9,30 @@ import { mobile } from "../responsive.js";
 import Register from "../pages/Register.jsx";
 import Login from "../pages/Login.jsx";
 import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { logout } from "../redux/userSlice.js";
+import { fontSize } from "@mui/system";
 
 
 
 
 function Nav() {
   const cart  = useSelector(state=>state.cart) ; 
+  const user = useSelector(state=>state.user.currentUser);
+  const dispatch = useDispatch() ; 
+  var username ;
+
+  const handleLogout = ()=> {
+      dispatch(logout()); 
+  } 
+  
+   if (user!=null)  {
+      
+      username = user.fullName; 
+      username.length>10? username= username.split(" ")[1]: username =username; 
+   }  
+   
+ 
   return (
     <Container>
       <Wrapper>
@@ -28,16 +47,16 @@ function Nav() {
           <Logo>SWAGG.</Logo>
         </Center>
         <Right>
-          <Linkss>
+        {user? <UsernameCont> {username} <Link to = '/' onClick = {handleLogout} style = {{fontSize: "14px" , marginTop: "-5px", color: "blue"}}>Logout</Link></UsernameCont>:  <Linkss>
           <At style = {{textDecoration:"none"}} href="/register">
             <MenuItem>REGISTER</MenuItem>
             {/* <Slash>/</Slash> */}
           </At>
           <Hr />
           <At href="/login" style = {{textDecoration:"none"}}>
-            <MenuItem>LOGIN</MenuItem>
+       <MenuItem>LOGIN</MenuItem> 
           </At>
-          </Linkss>
+          </Linkss>}
           <MenuItem>
          <Link style= {{color:"black"}} to= '/cart'>
          <Badge badgeContent={cart.quantity} color="warning">
@@ -55,7 +74,19 @@ export default Nav;
 
 
 
+const UsernameCont = styled.div `
+  display: flex ;
+  flex-direction: column ;
+  ${mobile({padding: "0px 5px 0px 5px"})}
+  margin-right: 20px ;
+  font-size: 16px ;
+  padding: 5px 10px 5px 10px; 
+  border: 2px solid lightgray; 
+  align-items:center;
+  justify-content: space-between ;
+  height: inherit ;  
 
+`
 
 const Container = styled.div`
   ${mobile({ height: "50px" })}
