@@ -10,10 +10,15 @@ import { useSelector } from 'react-redux';
 import { login } from '../redux/apiCalls';
 import Loading from '../Components/Loading';
 import { CircularProgress } from '@mui/material';
+import { useLocation } from 'react-router-dom';
 
 
 
 function Login() {
+    const location = useLocation() ; 
+   
+   
+     
     const [username, setUsername] = useState(''); 
     const [password, setPassword] = useState('') ; 
     const error = useSelector(state=> state.user.error) ; 
@@ -33,7 +38,6 @@ function Login() {
 
     return (
        <Container>
-          
           <WrapperContainer>
              <Logo><Icon src= {icon} />SWAGG.</Logo>
              <Title>Login</Title>
@@ -71,6 +75,8 @@ const Error = styled.span `
 color:red ; 
 text-align: center; 
 margin-bottom:10px;`
+
+
 const Container = styled.div `
 width: 100%; 
 position: relative; 

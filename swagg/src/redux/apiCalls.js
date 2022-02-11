@@ -17,3 +17,14 @@ export const login =  async (dispatch, user)=> {
         dispatch(loginFailure());
     }
 }
+
+export const register  = async (userD) => {
+    try {
+        const res = await publicRequest.post('/auth/register', userD); 
+        console.log(res)  ;
+        return res;
+    }
+    catch(err) {
+        console.log(err) ; 
+    }
+}

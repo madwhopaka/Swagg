@@ -4,48 +4,116 @@ import registerbg from '../images/registerbbg.jpg'
 import icon from '../images/logoicon.png' ; 
 import {mobile} from '../responsive.js' ; 
 import {Link} from 'react-router-dom' ; 
+import { useNavigate } from 'react-router-dom';
 import bgmob from '../images/bgmob.jpg';
+import { register } from '../redux/apiCalls';
+import {CircularProgress} from '@mui/material'
 
 
 
 
 function Register() {
 
-const [firstName, setFirst] = useState(''); 
-const [lastName,setLast] = useState('') ; 
+const [first, setFirst] = useState(''); 
+const [last,setLast] = useState('') ; 
+const [email, setEmail] = useState('') ;
+const [password,setPassword] = useState('') ; 
+const [password2, confirmPassword] = useState('') ; 
+const [loading, setLoading] = useState(false) ; 
+const [error, setError] = useState('') ; 
+const [msg, setMsg] = useState('') ;
+const nav = useNavigate() ; 
+
+const handleSubmit =  async (e)=> {
+ e.preventDefault() ; 
+ console.log("hello") ; 
+ if (first=='' || last =='' || email=='' || password=='' || password2==''   ) {
+     setError("You have not filled in some details. Check again")
+     setTimeout(()=>{
+         setError('') ;
+     },3000) ;
+ }
+ else if (!email.includes('@') || email.indexOf('@')==email.length-1 || email.indexOf('@')==0 || !email.includes('.') || email.indexOf('.')==email.length-1 || email.indexOf('.')==0)  {
+     setError("Invalid email entered, please enter valid email")  ;
+     setTimeout(()=> {
+         setError(''); 
+     },3000) ;
+ }
+ else if (password.length<6) {
+     setError("Password must atleast have 6 characters.") ;
+     setTimeout(()=> {
+        setError(''); 
+    },3000) ;
+ }
+ else if (password!=password2) {
+    setError("Both the password fields should match") ;
+    setTimeout(()=> {
+       setError(''); 
+   },3000) ;
+ }
+ else {
+     
+    setLoading(true) ; 
+    const payload = {
+        fullName : first + last , 
+        email : email, 
+        password: password ,
+    }
+    const res = await register(payload) ; 
+    setTimeout(()=>{
+            setLoading(false) ; 
+            if(res.status!=201) setError(res.data) ; 
+            else  {
+                setMsg("Your account has been created, login");     
+                setTimeout(()=> {
+                    nav('/login', {replace: true}); 
+                },2000)
+            }
+    },3000);
+    
+   
+
+ }
+
+}
 
     return (
        <Container>
-         <WrapperContainer>
+        {msg? <Imp>{msg}</Imp>:<></>}
+         <WrapperContainer onSubmit={handleSubmit}>
              <Logo><Icon src= {icon} />SWAGG.</Logo>
              <Title>Create a new account</Title>
              <InputWrapper>
              <Label> <p>Name</p></Label>
              <InputContainer>
-             <Input placeholder='John'  />
-             <Input placeholder='Doe' />
+             <Input placeholder='John'  onChange = {(e)=> setFirst(e.target.value)}/>
+             <Input placeholder='Doe'  onChange = {(e)=> setLast(e.target.value)} />
              </InputContainer >
              <Label> <p>Email</p></Label>
              <InputContainer>
-             <Input style = {{width: "100%"}}placeholder='johndoe@yahoo.in' />
+             <Input style = {{width: "100%"}}  onChange = {(e)=> setEmail(e.target.value)} placeholder='johndoe@yahoo.in' />
              </InputContainer >
              <Label> <p>Password</p></Label>
              <InputContainer>
-             <Input style = {{width: "100%"}}placeholder='Create a password' />
+             <Input style = {{width: "100%"}}   type = "password" onChange = {(e)=> setPassword(e.target.value)} placeholder='Create a password' />
              </InputContainer >
              <Label> <p>Confirm Password</p></Label>
              <InputContainer>
-             <Input style = {{width: "100%"}}placeholder='Both password fields should match.' />
+             <Input style = {{width: "100%"}} type = "password"  onChange = {(e)=> confirmPassword(e.target.value)} placeholder='Both password fields should match.' />
              </InputContainer ></InputWrapper>
              <Agreement>
                 <AgreementText>
                     By creating an account, I agree to the <b>Terms of Use</b> & <b>Privacy Policy</b>
                 </AgreementText>
              </Agreement>
-             <Button>
+             <Button type='submit'>
                  REGISTER
              </Button>
-             <AlreadyHave> <AlreadyHaveText>Already have an account ?  <Link style= {{color: " #1b385e"}} replace to ="/login" >Login</Link></AlreadyHaveText></AlreadyHave>
+             {loading? <CircularProgress /> : <></> }
+             { error &&    <Error>
+                {error}
+             </Error> } 
+             <AlreadyHave> <AlreadyHaveText>Already have an account ?  <Link style= {{color: "#1b385e"}} replace to ="/login" >Login</Link></AlreadyHaveText></AlreadyHave>
          </WrapperContainer>
        </Container>
     )
@@ -55,6 +123,24 @@ export default Register
 
 
 
+
+const Error = styled.span `
+color:red ; 
+padding: 0px 20px ; 
+text-align: center; 
+margin-bottom:10px;`
+
+
+const Imp = styled.span `
+color: #222020 ; 
+background: white;
+border-radius: 15px ;
+margin: 20px ;
+font-size: 18px ;
+padding: 10px 10px 10px 10px ;
+font-weight:500 ;
+text-align: center; 
+margin-bottom:10px;`
 
 const Container = styled.div `
 width: 100vw; 
