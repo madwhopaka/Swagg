@@ -14,7 +14,7 @@ import mobileband from '../images/final-band-mobile.png'
 import { useSelector } from 'react-redux';
 
 
-const URL = "https://swagg-backend-production.up.railway.app/";
+const URL = "https://swagg-backend-production.up.railway.app";
 
 const loadScript = () => {
     return new Promise(resolve => {
