@@ -1,34 +1,34 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import axios from 'axios' ; 
+import axios from 'axios';
 import { useLocation } from "react-router-dom";
 
-const TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxZTJmNjIzNDI3Njk2MjBkMjlkY2Q4YiIsImlzQWRtaW4iOnRydWUsImlhdCI6MTY0NDIyMDIxMSwiZXhwIjoxNjQ0NDc5NDExfQ.pxtAm7KE8sMOB7oMYduyscCiDwWjNXkaDSyFKvk2ong" ; 
+const TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxZTJmNjIzNDI3Njk2MjBkMjlkY2Q4YiIsImlzQWRtaW4iOnRydWUsImlhdCI6MTY0NDIyMDIxMSwiZXhwIjoxNjQ0NDc5NDExfQ.pxtAm7KE8sMOB7oMYduyscCiDwWjNXkaDSyFKvk2ong";
 
-const URL  = "https://swagg-backend.herokuapp.com"; 
+const URL = "https://swagg-backend-production.up.railway.app";
 const Success = () => {
   const location = useLocation();
-  console.log(location.state); 
+  console.log(location.state);
   //in Cart.jsx I sent data and cart. Please check that page for the changes.(in video it's only data)
   const data = location.state.address;
   const cart = location.state.cart;
-//   const currentUser = useSelector((state) => state.user.currentUser);
+  //   const currentUser = useSelector((state) => state.user.currentUser);
   const [orderId, setOrderId] = useState(null);
 
   useEffect(() => {
     const createOrder = async () => {
       try {
-        const res = await axios.post(`${URL}/api/orders/`,  {
-          userId: "OIddlskowe", 
+        const res = await axios.post(`${URL}/api/orders/`, {
+          userId: "OIddlskowe",
           products: cart.products.map((item) => ({
             productId: item._id,
             quantity: item._quantity,
           })),
           amount: cart.total,
-          address: data, 
-        },{headers:{token: `Bearer ${TOKEN}`}});
+          address: data,
+        }, { headers: { token: `Bearer ${TOKEN}` } });
         setOrderId(res.data._id);
-      } catch {}
+      } catch { }
     };
     data && createOrder();
   }, [cart, data]);
