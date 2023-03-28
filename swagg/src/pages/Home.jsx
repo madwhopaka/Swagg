@@ -13,7 +13,8 @@ import adidas from "../images/adidas.jpg";
 import { mobile } from "../responsive";
 import Footer from "../Components/Footer";
 import { loginFailure, loginStart, loginSuccess } from "../redux/userSlice";
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+
 
 
 
@@ -54,11 +55,22 @@ function Home() {
   })
 
 
+  const user = useSelector(state => state.user.currentUser);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    // Define the 'otpless' function
+    if (user == null) {
+      const script = document.createElement('script');
+      script.src = 'https://otpless.com/auth.js';
+      console.log(script.src);
+      document.body.appendChild(script);
+      console.log(document.body);
+    }
+  }, []);
 
+
+  useEffect(() => {
+    // Define the 'otpless' function
     window.otpless = (otplessUser) => {
       const waName = otplessUser.waName;
       const waNumber = otplessUser.waNumber;
