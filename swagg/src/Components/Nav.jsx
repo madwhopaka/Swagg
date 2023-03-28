@@ -23,12 +23,12 @@ function Nav() {
   const user = useSelector(state => state.user.currentUser);
   const dispatch = useDispatch();
   // var username;
-
   useEffect(() => {
-    console.log(user);
+
     if (user == null) {
       const script = document.createElement('script');
       script.src = 'https://otpless.com/auth.js';
+      console.log(script.src);
       script.async = true;
       document.body.appendChild(script);
     }
@@ -39,12 +39,6 @@ function Nav() {
     await persistor.purge();
     // Redirect the user to the login page
     window.location.href = '/';
-    if (user == null) {
-      const script = document.createElement('script');
-      script.src = 'https://otpless.com/auth.js';
-      script.async = true;
-      document.body.appendChild(script);
-    }
     dispatch(clearCart());
   }
 
