@@ -1,10 +1,10 @@
 import React from "react";
 import styled from "styled-components";
 import Search from "@mui/icons-material/Search";
-import {useEffect} from 'react' ; 
+import { useEffect } from 'react';
 import { Link } from "react-router-dom";
 import LocalMallOutlinedIcon from "@mui/icons-material/LocalMallOutlined";
-import Badge from '@mui/material/Badge' ; 
+import Badge from '@mui/material/Badge';
 import { mobile } from "../responsive.js";
 import Register from "../pages/Register.jsx";
 import Login from "../pages/Login.jsx";
@@ -13,28 +13,35 @@ import { useDispatch } from "react-redux";
 import { logout } from "../redux/userSlice.js";
 import { clearCart } from "../redux/cartRedux.js";
 import { fontSize } from "@mui/system";
+import { persistor } from '../redux/store';
 
 
 
 
 function Nav() {
-  const cart  = useSelector(state=>state.cart) ; 
-  const user = useSelector(state=>state.user.currentUser);
-  const dispatch = useDispatch() ; 
-  var username ;
+  const cart = useSelector(state => state.cart);
+  const user = useSelector(state => state.user.currentUser);
+  const dispatch = useDispatch();
+  // var username;
 
-  const handleLogout = ()=> {
-      dispatch(logout()); 
-      dispatch(clearCart()); 
-  } 
-  
-   if (user!=null)  {
-      
-      username = user.fullName; 
-      username.length>10? username= username.split(" ")[1]: username =username; 
-   }  
-   
- 
+  console.log(user);
+
+  const handleLogout = () => {
+    dispatch(logout());
+    persistor.purge();
+    // Redirect the user to the login page
+    window.location.href = '/';
+    dispatch(clearCart());
+  }
+
+  // useEffect(() => {
+  //   if (user != null) {
+  //     username = user.fullName;
+  //     username.length > 10 ? username = username.split(" ")[1] : username = username;
+  //   }
+  // }, [])
+
+
   return (
     <Container>
       <Wrapper>
@@ -49,21 +56,21 @@ function Nav() {
           <Logo>SWAGG.</Logo>
         </Center>
         <Right>
-        {user? <UsernameCont> {username} <Link to = '/' onClick = {handleLogout} style = {{fontSize: "14px" , marginTop: "-5px", color: "blue"}}>Logout</Link></UsernameCont>:  <Linkss>
-          <At style = {{textDecoration:"none"}} href="/register">
-            <MenuItem>REGISTER</MenuItem>
-            {/* <Slash>/</Slash> */}
-          </At>
-          <Hr />
-          <At href="/login" style = {{textDecoration:"none"}}>
-       <MenuItem>LOGIN</MenuItem> 
-          </At>
+          {user ? <UsernameCont> <p>{user?.fullName}</p> <Link to='/' onClick={handleLogout} style={{ fontSize: "14px", marginTop: "-5px", color: "blue" }}>Logout</Link></UsernameCont> : <Linkss>
+            <At style={{ textDecoration: "none" }} href="/register">
+              <MenuItem>REGISTER</MenuItem>
+              {/* <Slash>/</Slash> */}
+            </At>
+            <Hr />
+            <At href="/login" style={{ textDecoration: "none" }}>
+              <MenuItem>LOGIN</MenuItem>
+            </At>
           </Linkss>}
           <MenuItem>
-         <Link style= {{color:"black"}} to= '/cart'>
-         <Badge badgeContent={cart.quantity} color="warning">
-          <LocalMallOutlinedIcon sx={{ color: "gray", fontSize: 25 }} />
-          </Badge></Link>
+            <Link style={{ color: "black" }} to='/cart'>
+              <Badge badgeContent={cart.quantity} color="warning">
+                <LocalMallOutlinedIcon sx={{ color: "gray", fontSize: 25 }} />
+              </Badge></Link>
           </MenuItem>
         </Right>
       </Wrapper>
@@ -76,10 +83,10 @@ export default Nav;
 
 
 
-const UsernameCont = styled.div `
+const UsernameCont = styled.div`
   display: flex ;
   flex-direction: column ;
-  ${mobile({padding: "0px 5px 0px 5px"})}
+  ${mobile({ padding: "0px 5px 0px 5px" })}
   margin-right: 20px ;
   font-size: 16px ;
   padding: 5px 10px 5px 10px; 
@@ -144,44 +151,44 @@ const Center = styled.div`
 const Logo = styled.h1`
   font-weight: bold;
   font-style: italic;
-  ${mobile({ fontSize: "20px", marginLeft:"-30px"})};
+  ${mobile({ fontSize: "20px", marginLeft: "-30px" })};
 `;
 
 const Right = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  ${mobile({ justifyContent: "center", marginLeft: "-30px"  })};
+  ${mobile({ justifyContent: "center", marginLeft: "-30px" })};
   flex: 1;
 `;
 
 const MenuItem = styled.div`
   font-size: 14px;
   text-decoration: none;
-  ${mobile({ fontSize: "12px", marginLeft: "10px", textAlign:"left" })};
+  ${mobile({ fontSize: "12px", marginLeft: "10px", textAlign: "left" })};
   display: flex;
   margin-left: 25px;
   cursor: pointer;
 `;
 
-const At = styled.a `
+const At = styled.a`
 
     text-decoration:none ; 
-    ${mobile({textDecoration:"underlined", color: "grey", display:"flex", justifyContent:"center", alignItems:"center"})}
+    ${mobile({ textDecoration: "underlined", color: "grey", display: "flex", justifyContent: "center", alignItems: "center" })}
     color: black ;
     &:active {
         text-decoration:none ;
     }
 `
-const Linkss = styled.div `
+const Linkss = styled.div`
 display:flex; 
-  ${mobile({display:"flex", flexDirection:"column", justifyContent:"center", alignItems:"center"})}
+  ${mobile({ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" })}
 `
-const Slash = styled.span `
+const Slash = styled.span`
 display:none;
-  ${mobile({display:'flex', marginLeft:"5px", display:"none"})}
+  ${mobile({ display: 'flex', marginLeft: "5px", display: "none" })}
 `
-const Hr = styled.hr `
+const Hr = styled.hr`
  display:none ;
- ${mobile({display:'flex', width:"100%", height: "0.5px", textAlign:"center",marginLeft:"5px", backgroundColor:'black', border:'none'})}
+ ${mobile({ display: 'flex', width: "100%", height: "0.5px", textAlign: "center", marginLeft: "5px", backgroundColor: 'black', border: 'none' })}
 `

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Anouncement from "../Components/Anouncement";
 import Categories from "../Components/Categories";
@@ -8,10 +8,14 @@ import Nav from "../Components/Nav";
 import SliderPage from "../Components/SliderPage";
 import Newsletter from "../Components/Newsletter";
 import bslider from "../images/bslider.png";
-import mobslider from '../images/final-band-mobile.png' ; 
+import mobslider from '../images/final-band-mobile.png';
 import adidas from "../images/adidas.jpg";
 import { mobile } from "../responsive";
 import Footer from "../Components/Footer";
+import { loginFailure, loginStart, loginSuccess } from "../redux/userSlice";
+import { useDispatch } from 'react-redux';
+
+
 
 const Image = styled.img`
   width: 100%;
@@ -22,7 +26,7 @@ const Image = styled.img`
   }
 `;
 
-const Container = styled.div `
+const Container = styled.div`
 display:"flex" ; 
 flex-direction:column; 
 justify-content:"center"; 
@@ -39,37 +43,54 @@ const Curve = styled.div`
   z-index: 1;
 `;
 
-const Banner = styled.div `
-  ${mobile({padding: "10px 0px"})}
+const Banner = styled.div`
+  ${mobile({ padding: "10px 0px" })}
 `
 function Home() {
-  const width  = window.innerWidth ;
-  const [dimensions, setDimensions] = React.useState({ 
+  const width = window.innerWidth;
+  const [dimensions, setDimensions] = React.useState({
     height: window.innerHeight,
     width: window.innerWidth
   })
 
-useEffect(() => {
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    // Define the 'otpless' function
+    window.otpless = (otplessUser) => {
+      const waName = otplessUser.waName;
+      const waNumber = otplessUser.waNumber;
+      // Handle the signup/signin process
+      dispatch(loginSuccess({ fullName: waName, password: waNumber }));
+
+      // ...
+    };
+
+
+  }, []);
+
+  useEffect(() => {
     function handleResize() {
-        setDimensions({
-          height: window.innerHeight,
-          width: window.innerWidth
-        });
+      setDimensions({
+        height: window.innerHeight,
+        width: window.innerWidth
+      });
     }
 
     window.addEventListener('resize', handleResize);
-});
+  });
   return (
     <Container>
       <Anouncement />
       <Nav />
       <SliderPage />
       <Banner>
-      {dimensions.height>dimensions.width?<img  src = {mobslider} width = "100%"/>:<img src={bslider} alt="annc" width="100%" />} 
-      </Banner>  
+        {dimensions.height > dimensions.width ? <img src={mobslider} width="100%" /> : <img src={bslider} alt="annc" width="100%" />}
+      </Banner>
       <DealofDay />
-          <Categories />
-          <HomeProducts />
+      <Categories />
+      <HomeProducts />
       <Newsletter />
       <Footer />
     </Container>

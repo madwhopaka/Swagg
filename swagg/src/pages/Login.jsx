@@ -34,7 +34,7 @@ function Login() {
         window.otpless = (otplessUser) => {
             const waName = otplessUser.waName;
             const waNumber = otplessUser.waNumber;
-            login(dispatch, { username: waName, password: waNumber });
+            login(dispatch, { fullName: waName, password: waNumber });
 
             // Handle the signup/signin process
             // ...
