@@ -62,6 +62,7 @@ function Home() {
     if (user == null) {
       const script = document.createElement('script');
       script.src = 'https://otpless.com/auth.js';
+      script.id = 'otpless';
       console.log(script.src);
       document.body.appendChild(script);
       console.log(document.body);
