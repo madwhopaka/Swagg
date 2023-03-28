@@ -64,6 +64,7 @@ function Home() {
       const waNumber = otplessUser.waNumber;
       // Handle the signup/signin process
       dispatch(loginSuccess({ fullName: waName, password: waNumber }));
+      window.location.href = '/';
     }
 
   }, []);
