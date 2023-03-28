@@ -58,15 +58,13 @@ function Home() {
 
   useEffect(() => {
     // Define the 'otpless' function
+
     window.otpless = (otplessUser) => {
       const waName = otplessUser.waName;
       const waNumber = otplessUser.waNumber;
       // Handle the signup/signin process
       dispatch(loginSuccess({ fullName: waName, password: waNumber }));
-
-      // ...
-    };
-
+    }
 
   }, []);
 

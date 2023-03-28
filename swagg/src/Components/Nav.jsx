@@ -26,6 +26,16 @@ function Nav() {
 
   console.log(user);
 
+  useEffect(() => {
+    console.log(user);
+    if (user == null) {
+      const script = document.createElement('script');
+      script.src = 'https://otpless.com/auth.js';
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  }, [user]);
+
   const handleLogout = () => {
     dispatch(logout());
     persistor.purge();
