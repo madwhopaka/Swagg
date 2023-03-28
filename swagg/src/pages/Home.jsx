@@ -58,15 +58,15 @@ function Home() {
   const user = useSelector(state => state.user.currentUser);
   const dispatch = useDispatch();
 
-  // useEffect(() => {
-  //   if (user == null) {
-  //     const script = document.createElement('script');
-  //     script.src = 'https://otpless.com/auth.js';
-  //     console.log(script.src);
-  //     document.body.appendChild(script);
-  //     console.log(document.body);
-  //   }
-  // }, []);
+  useEffect(() => {
+    if (user == null) {
+      const script = document.createElement('script');
+      script.src = 'https://otpless.com/auth.js';
+      console.log(script.src);
+      document.body.appendChild(script);
+      console.log(document.body);
+    }
+  }, []);
 
 
   useEffect(() => {
