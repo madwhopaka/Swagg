@@ -27,12 +27,7 @@ function Nav() {
   const handleLogout = async () => {
     dispatch(logout());
     await persistor.purge();
-    var element = document.getElementById("otpless");
-    // Check if the element exists
-    if (element) {
-      // Remove the element from the DOM
-      element.parentNode.removeChild(element);
-    }
+    localStorage.clear();
     // Redirect the user to the login page
     window.location.href = '/';
     dispatch(clearCart());
