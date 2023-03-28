@@ -23,16 +23,16 @@ function Nav() {
   const user = useSelector(state => state.user.currentUser);
   const dispatch = useDispatch();
   // var username;
-  // useEffect(() => {
+  useEffect(() => {
 
-  //   if (user == null) {
-  //     const script = document.createElement('script');
-  //     script.src = 'https://otpless.com/auth.js';
-  //     console.log(script.src);
-  //     script.async = true;
-  //     document.body.appendChild(script);
-  //   }
-  // }, []);
+    if (user == null) {
+      const script = document.createElement('script');
+      script.src = 'https://otpless.com/auth.js';
+      console.log(script.src);
+      document.body.appendChild(script);
+      console.log(document.body);
+    }
+  }, []);
 
   const handleLogout = async () => {
     dispatch(logout());
