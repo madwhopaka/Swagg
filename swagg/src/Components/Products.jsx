@@ -59,7 +59,7 @@ function Products({ cat, filters, sort }) {
             try {
                 setLoading(true);
                 const res = await axios.get(cat ? `${URL}/api/products/?category=${cat}` : `${URL}/api/products`);
-
+                console.log(res); 
                 setProducts(res.data);
             }
             catch (err) {
